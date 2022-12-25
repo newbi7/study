@@ -12,9 +12,6 @@ HAVING COUNT(department_no)) al on d.department_no = al.department_no
 where category = '자연과학' order by 학생수 desc ) a
 where 순위 <3);
 -- -----------------------------------------
-select *
-from tb_professor;
-
 select class_name as 과목이름, department_name as 학과이름
 from tb_class c
 left join tb_department d
