@@ -26,5 +26,11 @@ left join tb_department d
 on c.department_no = d.DEPARTMENT_NO
 left join tb_professor p
 on c.department_no = p.department_no
-where class_name LIKE '논문%' and professor_name is null;
+where class_name LIKE '논문%' and professor_name is null and d.category like "예체능";
+
+select *
+from tb_class c
+left join tb_professor p
+on c.department_no = p.DEPARTMENT_NO
+where class_name LIKE '논문%'
 -- -------------------------------------------
