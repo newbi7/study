@@ -15,22 +15,8 @@ where 순위 <3);
 select class_name as 과목이름, department_name as 학과이름
 from tb_class c
 left join tb_department d
-on c.department_no = d.DEPARTMENT_NO
+on c.department_no = d.department_no
 left join tb_professor p
-on c.department_no = p.department_no
-where class_name LIKE '논문%' and professor_name is null;
-
-select *
-from tb_class c
-left join tb_department d
-on c.department_no = d.DEPARTMENT_NO
-left join tb_professor p
-on c.department_no = p.department_no
-where class_name LIKE '논문%' and professor_name is null and d.category like "예체능";
-
-select *
-from tb_class c
-left join tb_professor p
-on c.department_no = p.DEPARTMENT_NO
-where class_name LIKE '논문%'
+on d.department_no = p.DEPARTMENT_NO
+where class_name LIKE '논문%' and d.category like "예체능" and professor_name is null order by 학과이름 desc;
 -- -------------------------------------------
