@@ -30,3 +30,4 @@ on c.department_no = d.DEPARTMENT_NO
 left join tb_professor p
 on c.department_no = p.department_no
 where class_name LIKE '논문%' and professor_name is null;
+-- -------------------------------------------
