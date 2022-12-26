@@ -119,4 +119,7 @@ on a.class_no = c.class_no
 where class_name like '%논문%' and professor_no is null) a2
 left join tb_department d
 on a2.department_no = d.department_no
+where category = '예체능'
 order by 학과이름 asc;
+-- 16----------------------
+
