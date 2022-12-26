@@ -108,11 +108,9 @@ where department_name = '생태시스템공학과'
 order by date_format(entrance_date, '%Y%m%d')
 limit 5;
 -- 15---------------------------------
-
-
 select class_name as '과목이름', department_name as '학과이름'
 from (select c.department_no, class_name
-from (select class_no, p.professor_no, department_no
+from (select class_no, cp.professor_no, department_no
 from tb_class_professor cp
 left join tb_professor p
 on p.professor_no = cp.professor_no) a
