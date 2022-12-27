@@ -133,3 +133,19 @@ on a.department_no = p.department_no
 group by department_name
 order by 교수수 desc;
 -- 17 --------------
+select preattending_class_no as 선수과목, class_name as 과목
+from tb_class c
+where (select department_no
+from tb_department
+where department_name = '영어영문학과') = c.DEPARTMENT_NO and preattending_class_no is not null;
+-- 18 ----------------------
+select department_name as '학과이름', professor_name as 교수이름, count(substr(student_ssn, 8, 1) = 2) as 여학생수
+from (select p.department_no, department_name, category, professor_name, professor_no
+from (select department_no, department_name, category
+from tb_department
+where category = '공학') a
+left join tb_professor p
+on p.department_no = a.department_no) a2
+left join tb_student s
+on s.coach_professor_no = a2.professor_no
+group by department_name
