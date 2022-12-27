@@ -121,5 +121,15 @@ left join tb_department d
 on a2.department_no = d.department_no
 where category = '예체능'
 order by 학과이름 asc;
--- 16----------------------
-
+-- 16---------------------
+select '자연과학' as '계열', department_name as '학과', count(professor_no) as '교수수'
+from (select category, DEPARTMENT_NAME, department_no
+from tb_department d
+where d.category = (select category
+from tb_department
+where department_name = '환경조경학과') ) a
+left join tb_professor p
+on a.department_no = p.department_no
+group by department_name
+order by 교수수 desc;
+-- 17 --------------
