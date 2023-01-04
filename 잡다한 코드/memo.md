@@ -4,7 +4,6 @@ bdate
 bpage
 bprice
 bauthor
-bpublisher
 bimgurl
 
 bsibn
@@ -15,7 +14,6 @@ bsibn
 작가
 이미지
 
-psignn
 pid
 ppw
 pname
@@ -23,4 +21,12 @@ pssnumber
 pphone
 pbnumber
 ppoint
-padmin
+
+
+ID
+PW
+성명
+주민번호
+핸드폰번호
+빌린책수
+포인트
