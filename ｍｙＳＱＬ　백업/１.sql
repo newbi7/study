@@ -1,0 +1,1 @@
+SELECT * FROM library.book;

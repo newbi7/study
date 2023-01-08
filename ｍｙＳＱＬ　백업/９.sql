@@ -1,0 +1,2 @@
+INSERT INTO book (bnumber, pid, bisbn, btitle, bdate, bpage, bprice, bauthor, btranslator, bsupplement, bpublisher, bimgurl, bborrowdate, breturndate, bpoint, bfuturepoint, bhave ) 
+ VALUES ('1', '2', '3', '4', '5', '2', '3', '4', '5', '2', '3', '4', '2', '3', '4', '5', '대여중')
