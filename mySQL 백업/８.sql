@@ -1,1 +1,0 @@
-ALTER TABLE bookinf ADD breturndate int(20) AFTER bborrowdate

@@ -1,2 +1,0 @@
-INSERT INTO bookinf (bnumber, pid, bisbn, btitle, bdate, bpage, bprice, bauthor, btranslator, bsupplement, bpublisher, bimgurl, bhave)
-VALUES (12, 'admin', 12234, 12, 12, 123, 123, 123, 123, 123, 123, 123, '대여중');
