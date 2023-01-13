@@ -74,8 +74,7 @@ let myFunc = function /* haha */() {}
 //object가 나와야 하는데 function
 // 함수선언문
 function myfunc1(a, b) {
-    return a + b;
-} 
+    return a + b; } 
 console.log(myfunc1(10,20)); // 30
 3 * (4 + 5)
 //////////////////////////////////
@@ -88,8 +87,71 @@ function myFunc(a, b) {
 // Creation phase 에서 이루어진다.
 // 함수 표현식
 let myFunc = function(a, b) {
-    return a + b;
-}
+    return a + b; }
 // execution phase 에서 이루어진다.
 // 자바스크립트에서는 변수가지고 함수를 호출하는 시스템이다.
 
+function add(x,y) {
+    // 한수는 내장 배열을 하나 가지고 있는데
+    // 그 이름이 arguments
+    // arguments[] => [10, 20, 30, 40]
+    return arguments[0] + arguments[1]; }
+console.log(add(10,20)); // JavaScript는 이름만 맞으면 인자의 개수에 상관없이 무조건 호출
+// 결과 : NaN
+console.log(add(10, 20, 30, 40)); //30
+////////////////////////////////
+// IIFE(즉시 실행 함수)
+(function () {
+    let x = 10;
+    let y = 20;
+    console.log(x + y);
+}());
+// 변수들의 충돌이 발생할 수 있고 함수 스코프 내로 제한시킬 수 있기 때문에 제한하는게 맞다.
+// Javascript의 특성인 전역 scope의 공유 문제를 해결할 수 있다.
+function outer() {
+    let x = 1;
+    // 중첩함수
+    function inner() {
+        let y = 2;
+        console.log(x + y);
+    }
+    inner();
+}
+outer();
+///////////////////////
+// Callback 함수
+// 숫자를 하나 입력으로 줘서 0부터 해당 숫자까지 console에 출력하는 간단한 프로그램을 작성한다.
+function repeat(n){
+    for(let i=0; i<n; i++) {
+        console.log(i);
+    }
+}
+repeat(3);
+///////////////////////////
+// 프로그래밍 언어에서 일급시민이라는 용어가 있다.
+// first-class citizen (일급시민) 보다 first-class object (일급객체)를 많이 쓴다.
+// // 4가지 특성을 만족해야한다.
+// 모든 일급 객체는 함수의 실질적인 매개변수가 될 수 있다.
+// 모든 일급 객체는 함수의 반환값이 될 수 있다.
+// 모든 일급 객체는 할당의 대상이 될 수 있다.
+// 모든 일급 객체는 비교 연산(==, equal)을 적용할 수 있다.
+// 1. 익명의 literal로 생성이 가능하다.
+// 2. 변수에 저장될 수 있어야한다.(값으로 판단)
+// 3. 함수의 인자로 전달 될 수 있어야한다.
+// 4. 함수의 리턴값으로 사용 할 수 있어야 한다.
+// ex) 함수를 인자로 받아서 공통된 로직을 작성하고 경우에 따라서 변화되는 로직을 추상화해서 외부 함수로 대체
+function repeat(n, f) {
+    for(let i=0; i<n; i++) {
+        f(i);
+    }
+} // Higher-Order Function(고차함수)
+let printAll = function(i) {
+    console.log(i);
+} // callback function 
+let printOdd = function(i) {
+    if(i%2 == 1) console.log(i);
+}
+let printEven = function(i) {
+    if(i%2 == 0) console.log(i);
+}
+repeat(10, printAll);
