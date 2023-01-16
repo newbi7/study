@@ -279,8 +279,8 @@
 // console.log(obj);
 // console.dir(obj);
 
-function square(number){
-    return number * number;
-}
-console.log(square);
-console.dir(square);
+// function square(number){
+//     return number * number;
+// }
+// console.log(square);
+// console.dir(square);
