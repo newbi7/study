@@ -113,9 +113,131 @@
 //////////////////////////////////////////
 // 유일한 예외가 하나 있다.
 // 객체 만들떄 이렇게도 만들 수 있다.(예외적)
-const obj = Object.create(); 
+// const obj = Object.create(); 
 //객체를 만들떄 상위 property 객체를 지정해서 만들 수 있다.
 // null을 주면 ... 상위 prototype객체를 사용하지 않는다는 의미다.
 // 이렇게 되면..._proto_를 아예 사용할 수 없다.
 // 그래서 __proto__를 코드에 직접 사용을 권장하지 않는다.
 // 다른방법으로 이용한다.
+// 객체 literal로 생성
+// const obj = {};
+
+// const parent = {
+//     x : 1
+// }
+
+// 상위 prototype객체를 얻어오기 위해서 아래처럼 하는건 좋지 않다.
+// obj.__poroto__ 
+// Object.getPrototypeOf(obj)  // prototype객체를 획득
+// Object.setPrototypeOf(obj, parent);
+///////////////////////////////////////////////
+// non-constructor인 arrow function을 하나 만들어서
+// 진짜 이 함수 객체의 prototype객체가 생성되지 않는지 확인하자.
+// const person = (name) => {
+//     this.name = name;
+// }
+// // person은 함수객체
+// console.log(person.prototype); //undefined
+///////////////////////////////
+// 전체적인 그림그리기
+// function Circle(radius) {
+//     this.radius = radius
+// }
+
+// const circle1 = new Circle(5);
+//////////////////////////////////
+// function foo() {
+//     x = 10; // 에러가 아닌... 전역변수로 만들어요
+//             // window객체의 property로 등록
+//             // 암묵적 전역(Impicit Global)이라고 한다.
+//             // 자바스크립트 특유의 특징 - 자바스크립트는 변수선언을 하지 않아도 된다.(x)
+//         }
+// foo();
+
+// console.log(x);  // 10
+
+// // 유지보수에 도움이 안된다 -> 규칙있게 써보자!!
+// 'use strict'; // 전역에서 제일 위에... 혹은 함수안에서 제일 위에
+/////////////////////////////////////////
+// var x = 100;
+
+// if[true]{
+//     let x = '홍길동'
+// }
+
+// function myFunc() {
+//     console.log('hello')  //
+// }
+
+////////////////////////////////
+
+//////////////////////////////////////
+// const x = 1;
+
+// function foo() {
+//     const y = 2;
+
+//     function bar() {
+//         const z = 3;
+//         console.log(x + y + z);
+//     }
+//     bar();
+// }
+
+// foo();
+/////////
+// 전역 execution context -> func함수의 execution context ->
+// bar 함수의 execution context
+
+// const x = 1;
+
+// function outer() {
+//     const x = 10;
+
+//     const inner = function() {
+//         console.log(x);
+//     }
+//     return inner; // 함수가 함수를 리턴한다.
+// }
+
+// const result = outer();
+
+// result();  // 1이 되어야 우리가 알고 있는 정상적인 execution context stack의 동작이에요
+// 그런데 10이 찍힌다. 왜그럴까? 이 현상을 클로져라고 부른다.
+
+// function foo() {
+//     const x = 1;
+//     const y = 2;
+
+//     function bar() {
+//         const z = 3;
+
+//         console.log(z);
+//     }
+//     return bar;
+// }
+// const result = foo();
+// result();
+// z -> closer 가 아니다. z가 x+z로 바뀌면 closer;
+
+///////////////////////////////////////
+// 클로져를 이용한 간단한 응용.
+
+// const increase = function() {
+//     let num = 0;
+//     return ++num;
+// }
+
+// console.log(increase());    //1
+// num = 10;
+// 정보의 은닉은 되나 카운터로서 역할을 못한다.
+
+const increase = (function() {
+    let num = 0;
+
+    return function(){
+        return ++num;
+    }
+}());
+
+console.log(increase());
