@@ -168,10 +168,13 @@
 // function myFunc() {
 //     console.log('hello')  //
 // }
+//     function aa() {
+//         console.log('haha');
+//     }
+// }
 
 ////////////////////////////////
 
-//////////////////////////////////////
 // const x = 1;
 
 // function foo() {
@@ -232,12 +235,12 @@
 // num = 10;
 // 정보의 은닉은 되나 카운터로서 역할을 못한다.
 
-const increase = (function() {
-    let num = 0;
+// const increase = (function() {
+//     let num = 0;
 
-    return function(){
-        return ++num;
-    }
-}());
+//     return function(){
+//         return ++num;
+//     }
+// }());
 
-console.log(increase());
+// console.log(increase());

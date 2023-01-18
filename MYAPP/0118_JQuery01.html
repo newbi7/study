@@ -1,0 +1,29 @@
+<!-- 이 파일은 0118_jQuery01.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
+    </script>
+    <script src="./js/0118_jQuery01.js"></script>
+</head>
+<body>
+    <h1> 여기는 H1입니다.!! </h1>
+    <div>
+        <div id="b" class="myClass">가장 좋아하는 가수는?</div>
+        <ul>
+            <li>홍길동</li>
+            <li id="shin">신사임당</li>
+            <!-- $('#shin') -->
+            <!-- #('ul') -->
+            <li id="b">강감찬</li>
+            <li id="lee" class="myClass">이순신</li>
+        </ul>
+    </div>
+    <!-- 지금하는 방식은 inline event model - HTML이 가지는 이벤트 처리방식이다.-->
+    <!-- 속성을 이용 (attribute를 이용한다.)
+    -->
+    <input type="button" value="클릭해보세요" onclick="myFunc()">
+</body>
+</html>
