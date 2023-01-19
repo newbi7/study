@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
+    </script>
+    <script src="./js/0119_jQuery01.js"></script>
+    <!-- Bootstrap CDN을 포함해서 제공하는 css를 이용해 보아요!-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Browser에서 사용자가 발생시킬 수 있는 event의 종류가 정해져 있다.
+         click, dbclick, change, mouseover, mouseenter, mouseleave, keypress, keyup, keydown-->
+    <!-- 이런 event에 대해 HTML의 입장에서 이런 event처리를 할수 있다. 상당히 쉬운 방법으로 event처리를 할수 있도록 제공한다.
+    inline event model - tag의 속성을 이용해서 event를 처리하는 방식-->
+    <!-- 사용하는 속성은 on + event이름 -->
+    <ul>
+        <li>홍길동</li>
+    </ul>
+    <select onchange="myFunc()">
+        <option>홍길동</option>
+        <option>신사임당</option>
+        <option>강감찬</option>
+        <option>이순신</option>
+    </select>
+    <br><br>
+    <!-- event source : div element가 됩니다.
+        정확히는 DOM안에 있는 div element로 만든 node를 지칭한다.  -->
+    <div ondblclick="myFunc()">여기에 선택된 사람이 출력됩니다.</div>
+    <!-- <input type="button" value="서버로 전송!"> 예전 버튼생성법 -->
+    <br><br>
+    <button class="btn btn-info"> 이것도 서버로 전송버튼입니다. </button>
+</body>
+</html>
