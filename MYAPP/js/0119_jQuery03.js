@@ -9,5 +9,9 @@ function myFunc() {
 }
 
 function removeBtn() {
-    $('button[disabled]').removeAttr()
+    // $('button[disabled]').removeAttr('disabled');
+    // 속성의 값을 알아보자.
+    // alert($('button[disabled]').attr('data-author'));
+    // 속성의 값을 변경하자.
+    $('button[disabled]').attr('data-author', '신사임당');
 }
