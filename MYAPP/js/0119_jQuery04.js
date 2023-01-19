@@ -11,6 +11,6 @@ function myFunc() {
     $ ('#innerDiv').empty();
 }
 
-function display_input {
+function display_input() {
     alert($('#myID').val()); 
 }
