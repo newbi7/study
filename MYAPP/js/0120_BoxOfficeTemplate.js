@@ -20,10 +20,10 @@ function myFunc() {
             let sa = $("<td></td>").text(salesAcc);
             let od = $("<td></td>").text(openDt);
 
-            tr.append(rank);
-            tr.append(title);
-            tr.append(salesAcc);
-            tr.append(openDt);
+            tr.append(rk);
+            tr.append(tt);
+            tr.append(sa);
+            tr.append(od);
 
             $('tbody').append(tr);
         },
@@ -32,3 +32,7 @@ function myFunc() {
         }   
         });
     };
+
+function innerFunc() { 
+    
+}
