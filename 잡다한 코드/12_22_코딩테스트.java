@@ -25,7 +25,7 @@ public class JanggiCannon {
 		int resultV = 0;
 		
 		while(true) {
-			try {
+			try {mapSize Integer.
 				mapSize = Integer.parseInt(sc.nextLine());	// 장기판의 크기를 입력 받는다. nextInt를 사용시 return 소거용 nextLine을 한 번 더 써야 하기 대문에 형변환을 사용함.
 			} catch (Exception e) {
 				break;

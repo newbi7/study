@@ -73,7 +73,7 @@ function searchData() {
             Authorization: 'KakaoAK 5559977ec58da2ce68a5aba6c2027c04'
         },
         data: {
-            query: tt
+            targetDt: tt
         },
         dataType: 'json',
         success: function (data) {
