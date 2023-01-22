@@ -12,3 +12,4 @@ http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOffi
 
 
 Query String => ?key=756e6c8584bda7b0084ecb882f94a26a&targetDt=20230119
+
