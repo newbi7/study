@@ -3,7 +3,6 @@ function formatDateStr(dateStr, toISO) {
     const year = dateObj.getFullYear();
     const month = ('0' + (dateObj.getMonth() + 1)).slice(-2); // 뒤에서부터 두 글자를 복사하여 새로운 문자열 리턴
     const date = ('0' + dateObj.getDate()).slice(-2);
-
     if (toISO) {
         return `${year}-${month}-${date}`;
     } else {
@@ -73,7 +72,7 @@ function searchData() {
             Authorization: 'KakaoAK 5559977ec58da2ce68a5aba6c2027c04'
         },
         data: {
-            targetDt: tt
+            targetDt: #title
         },
         dataType: 'json',
         success: function (data) {
