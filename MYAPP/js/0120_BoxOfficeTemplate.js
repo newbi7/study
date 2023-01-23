@@ -1,3 +1,12 @@
+
+$(function () {
+    $('#searchButton').on('click', searchData);
+    $('#deleteButton').on('click', deletecheck);
+
+    var today = new Date();
+    $('#searchdatefield').val(formatDateStr(today, true));
+});
+
 function formatDateStr(dateStr, toISO) {
     const dateObj = new Date(dateStr);
     const year = dateObj.getFullYear();
@@ -10,7 +19,7 @@ function formatDateStr(dateStr, toISO) {
     }
 }
 
-function deleteMultiple() {
+function deletecheck() {
     const targetKeysList = [];
 
     $('input[type="checkbox"].delete-checkbox:checked').each(function () {
@@ -40,49 +49,54 @@ function searchData() {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            let rank = $('#rank').text(data.boxOfficeResult.dailyBoxOfficeList[0].rank);
-            let title = $('#title').text(data.boxOfficeResult.dailyBoxOfficeList[0].movieNm);
-            let salesAcc = $('#salesAcc').text(data.boxOfficeResult.dailyBoxOfficeList[0].salesAcc);
-            let openDt = $('#openDt').text(data.boxOfficeResult.dailyBoxOfficeList[0].openDt);
-
-            let tr = $("<tr></tr>");
-            let rk = $("<td></td>").text(rank);
-            let tt = $("<td></td>").text(title);
-            let sa = $("<td></td>").text(salesAcc);
-            let od = $("<td></td>").text(openDt);
-
-            tr.append(rk);
-            tr.append(tt);
-            tr.append(sa);
-            tr.append(od);
-
-            $('tbody').append(tr);
             console.log('코비');
+            const list = data.boxOfficeResult.dailyBoxOfficeList;
+            list.forEach((item, key) => {
+                const checkbox = $('<input />').attr('type', 'checkbox').addClass('delete-checkbox');
+                const deleteBtn = $('<button></button>').text('삭제').addClass('btn').addClass('btn-danger').click(deleteOne);
+                const checkTd = $('<td></td>').append(checkbox);
+                const delBtnTd = $('<td></td>').append(deleteBtn);
+                const rankTd = $('<td></td>').text(item.rank + '위');
+                const posterTd = $('<td></td>');
+                const titleTd = $('<td></td>').text(item.movieNm);
+                const audiTd = $('<td></td>').text(Number(item.audiAcc).toLocaleString() + '명');
+                const openDtTd = $('<td></td>').text(item.openDt);
+                const tr = $('<tr></tr>');
+                tr.append(checkTd);
+                tr.append(delBtnTd);
+                tr.append(rankTd);
+                tr.append(posterTd);
+                tr.append(titleTd);
+                tr.append(audiTd);
+                tr.append(openDtTd);
+                tr.attr('data-key', key);
+
+                $.ajax({
+                    async: true,
+                    url: 'https://dapi.kakao.com/v2/search/image',
+                    type: 'GET',
+                    headers: {
+                        Authorization: 'KakaoAK 5559977ec58da2ce68a5aba6c2027c04'
+                    },
+                    data: {
+                        query: item.movieNm
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log("카카오성공");
+                        let imgurl = data.documents[0].thumbnail_url;
+                        let myImg = $('<img/>').attr('src', imgurl);
+                        posterTd.append(myImg);
+                    },
+                    error: function () {
+                        console.log("이상하다");
+                    }
+                });
+            })
         },
         error: function () {
             console.log('뭔가이상');
         }
     })
 
-    $.ajax({
-        async: true,
-        url: 'https://dapi.kakao.com/v2/search/image',
-        type: 'GET',
-        headers: {
-            Authorization: 'KakaoAK 5559977ec58da2ce68a5aba6c2027c04'
-        },
-        data: {
-            targetDt: #title
-        },
-        dataType: 'json',
-        success: function (data) {
-            console.log("카카오성공");
-            let imgurl = data.documents[0].thumbnail_url;
-            let myImg = $('<img/>').attr('src', imgurl);
-            $('div').append(myImg);
-        },
-        error: function () {
-            console.log("이상하다");
-        }
-    });
 };
