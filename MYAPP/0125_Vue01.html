@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Vue.js를 이용해 보아요-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+        <div id="myDiv"></div>
+        <button v-on:click="myClick">클릭하세요</button> <!-- 함수 레퍼런스를 줘야한다. myClick(); X-->
+    </div>
+
+    <script>
+        //Vue instance(인스턴스)를 생성
+        new Vue({
+            el: '#app',    //el 속성
+            data: {        //data 속성
+                message: '소리없는 아우성!'
+            },
+            methods: {
+                myFunc: function () {
+                    console.log('여기는 myFunc');
+                },
+                myClick: function () {
+                    console.log('버튼이 클릭');
+                    const myDiv = document.getElementById('myDiv')
+                    myDiv.innerText = '이순신 홍길동'
+                    this.message = '메세지가 바뀌었어요!'
+                }
+            },
+            brforeCreate: function () {
+                // 이 시점에는 아직 data속성과 methods 속성이 정의 되지 않은 시점이에요, 화면에 부착안된시점
+                console.log(this.message);
+            }, // beforecreate상태가 먼저 실행된다. beforeCreate Hood method
+            created: function () {
+                console.log('created가 호출');
+                console.log(this.message);
+                this.myFunc();
+            },
+            beforeMount: function () {
+                console.log('beforeMount가 호출');
+                // 아직 화면에 붙지 않았기 때문에 화면제어를 할수 없다.
+            }, // created hook method 이 시점에는 data속성과 method속성을 사용할 수 있다.
+            mounted: function () {
+                // 화면에 Vue instance가 붙은 직후에 호출되기 때문에 화면제어 가능!!
+                console.log('mounted가 호출');
+                //  $('#myDiv').text('하이하이!')
+                const myDiv = document.getElementById('myDiv')
+                myDiv.innerText = '하이하이'
+            },
+            beforeUpdate: function () {
+                console.log('beforeUpdate 호출');
+                console.log('변경되었어요!');
+            }
+        });  // 만들어진 Vue instance가 내가 원하는 일을 하는 객체여야해요
+    </script>
+</body>
+
+</html>
