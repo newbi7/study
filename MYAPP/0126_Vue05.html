@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Vue.js를 이용해 보아요-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+    <child-component></child-component>
+  </div>
+
+  <script>
+    // 전역 component로 만들꺼고 Root Component의 하위로 사용할 거에요
+    Vue.component('child-component', {
+      template: '<button v-on:click="childFunc">클릭클릭</button>',
+      data() {
+        return {
+          myData: 20
+        }
+      },
+      methods: {
+        childFunc: function() {
+          alert('버튼이 클릭되었어요!');
+        }
+      }
+    })
+
+    new Vue({
+      el: '#app'
+    })
+  </script>
+
+
+</body>
+
+</html>

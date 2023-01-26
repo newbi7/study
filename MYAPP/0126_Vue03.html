@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Vue.js를 이용해 보아요-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+    <my-component1></my-component1>
+    <my-component2></my-component2>
+  </div>
+
+  <script>
+    // 지역 component 2개를 만들어서 사용해 보아요
+    let cmp1 = {
+      template: '<div>첫번째 지역 component : {{ cmp1Data }}</div>',
+      data: function() {
+        return{
+          cmp1Data: 100
+        }
+      }
+    }
+
+    let cmp2 = {
+      template: '<div>두번째 지역 component : {{ cmp2Data }}</div>',
+      data: function() {
+        return{
+          // 어떻게 해야 첫번째 component의 data를 사용 할 수 있나요
+          // 안된다! (한 컴포넌트에서 다른 컴포넌트의 데이터를 직접 access하는건 허용되지 않는다.)
+          cmp2Data: cmp1.data.cmp1Data
+        }
+      }
+    }
+
+    new Vue({
+      el: '#app',
+      components: {
+        'my-component1':cmp1,
+        'my-component2':cmp2
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>

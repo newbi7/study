@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Vue.js를 이용해 보아요-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+    Root component의 변수값은: {{ myName }}
+    <global-component></global-component>
+    <global-component></global-component>
+    <global-component></global-component>
+  </div>
+
+  <script>
+    let tmp = {
+      myName: '홍길동', //property
+      myFunc: function() {
+        //constructor
+      }, //property(method가 아니에요!)
+      // ES6에서 나온 method표현 방식
+      mySum(){       //method
+        // non-constructor
+      }
+    }
+    Vue.component('global-component', {
+      template: '<div>변수의 값은: {{ myData }}</div>'/*this.myData = myData 생략*/,
+      // data: function(){
+      //   return{
+      //     myData: 200
+      //   };
+
+        data() {
+          return {
+            myData: 200
+          }  // 둘다 같다.
+        }
+      }       // 데이터 공유문제 떄문에 하부컴퍼넌트에서는 다르게 표현한다. data: {myData: 100} X
+    );
+
+    new Vue({
+      el: '#app',
+      data: {
+        myName: '홍길동'
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>

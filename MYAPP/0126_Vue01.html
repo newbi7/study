@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Vue.js를 이용해 보아요-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+    안녕하세요! {{  this.myID  }}
+    <my-component></my-component>
+    <my-local-component></my-local-component>
+  </div>
+
+  <script>
+    // 전역 컴포넌트 등록!
+    // 컴포넌트(자바스크립트 객체)부터 하나 생성해 보아요!
+    let myCmp = {
+      template: '<div>여기는 DIV입니다.</div>'
+    }
+
+    // 전역 컴포넌트 등록!
+    // 컴포넌트 이름은 케밥케이스, 2단어 이상
+    // 사용하지 않을거면 파스칼케이스 권장
+    // 결국은 HTML 태그명으로 사용된다.
+    Vue.Component('my-component', myCmp);
+
+    let localCmp = {
+      template: '<div>여기는 로컬입니다.</div>'
+    }
+
+    new Vue({
+      el: '#app',
+      data: {
+        myID: '홍길동',
+        myAge: '20'
+      },
+      components: {
+        'my-local-componet': localCmp
+      }
+      /* template: '<div>아우성</div>' 안녕하세요 -> 아우성*/
+    })
+  </script>
+
+</body>
+
+</html>
