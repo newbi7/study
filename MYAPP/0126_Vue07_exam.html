@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <div id="app">
+    <global-component-a></global-component-a>
+    <global-component-b></global-component-b>
+  </div>
+
+  <script>
+    Vue.component('global-component-a', {
+      template: `<div>
+         <local-component-c></local-component-c>
+         <local-component-d></local-component-d>
+      </div>`,
+      components: {
+        'local-component-c': {
+            template: '<div>local component c</div>'
+        },
+        'local-component-d': {
+            template: '<div> 처리된 데이터: {{ }} </div>'
+        },
+      }
+    });
+
+    Vue.component('global-component-b', {
+        template: '<local-component-f></local-component-f>',
+        components: {
+          'local-component-f': {
+            template: `
+            <div>
+                <input type=text id='inputTxt'>
+                <button v-on:click="btnClick">클릭클릭</button>
+            </div>
+            `,
+            methods: {
+              btnClick: function() {
+                alert($('#inputTxt').val());
+              }
+            }
+
+          }
+        }
+    });
+
+    new Vue({
+      el: '#app'
+    });
+  </script>
+
+</body>
+
+</html>
+<!-- 
+/////////////////////////////////////////////
+
+
+},
+brforeCreate: function () { },
+created: function () { this.myFunc(); },
+beforeMount: function () { },
+mounted: function () {
+// 화면에 Vue instance가 붙어 화면제어 가능!!
+// $('#myDiv').text('하이하이!')
+const myDiv = document.getElementById('myDiv')
+myDiv.innerText = '하이하이' },
+beforeUpdate: function () { }
+});
+
+<script>
+  Vue.component('my-component',  /* '소문자 + -' 케밥스타일*/ {
+    template: '<div>여기는 DIV 전역 컴포넌트입니다.</div>'
+  });
+
+  let cmp = {
+    template: '<div>여기는 DIV Local 컴포넌트입니다.</div>'
+  }
+
+  new Vue({
+    el: '#app',
+    data: {
+      myMsg: '안녕'
+    },
+    components: {
+      'my-local-cmp': cmp
+    }
+  })
+
+  let myCmp = {
+    template: '<div>여기는 DIV입니다.</div>'
+  }
+  Vue.Component('my-component', myCmp);
+
+  let localCmp = {
+    template: '<div>여기는 로컬입니다.</div>'
+  }
+
+  new Vue({
+    el: '#app',
+    data: {
+      myID: '홍길동',
+      myAge: '20'
+    },
+    components: {
+      'my-local-componet': localCmp
+    }
+  })
+
+  let tmp = {
+    myName: '홍길동', //property
+    myFunc: function () {
+      mySum(){       //method
+      }
+    }
+    Vue.component('global-component', {
+      template: '<div>변수의 값은: {{ myData }}</div>'/*this.myData = myData 생략*/,
+      data() {
+        return {
+          myData: 200
+        }  // 둘다 같다.
+      }
+    }       // 데이터 공유문제 떄문에 하부컴퍼넌트에서는 다르게 표현한다. data: {myData: 100} X
+    );
+
+    new Vue({
+      el: '#app',
+      data: {
+        myName: '홍길동'
+      }
+    })
+    let cmp1 = {
+      template: '<div>첫번째 지역 component : {{ cmp1Data }}</div>',
+      data: function () {
+        return {
+          cmp1Data: 100
+        }
+      }
+    }
+
+    let cmp2 = {
+      template: '<div>두번째 지역 component : {{ cmp2Data }}</div>',
+      data: function () {
+        return {
+          cmp2Data: cmp1.data.cmp1Data
+        }
+      }
+    }
+    new Vue({
+      el: '#app',
+      components: {
+        'my-component1': cmp1,
+        'my-component2': cmp2
+      }
+    })
+</script>
+
+Vue.component('child-component', {
+props: {
+propsData: String, // value값은 데이터타입을 나타내는 생성자 함수
+},
+template: '<div>여기는 하위 컴포넌트에요! => {{ propsData }}</div>'
+})
+new Vue({
+el: '#app',
+data: {
+message: '소리없는 아우성'
+}
+});
+Vue.component('child-component', {
+template: '<button v-on:click="childFunc">클릭클릭</button>',
+data() {
+return {
+myData: 20
+}
+},
+methods: {
+childFunc: function () {
+this.$emit('print_msg', 100, 'Hello', {
+msg: '전달된 이벤트'
+})
+}
+}
+})
+
+new Vue({
+el: '#app',
+methods: {
+printText: function(...args) {
+console.log('이벤트 발생');
+console.log(args[0]); // 100
+console.log(args[1]); // 'Hello'
+console.log(args[2]); // 'Hello'
+}
+}
+});
+
+let eventBus = new Vue();
+Vue.component('child-component', {
+template: '<button v-on:click="btnClick">클릭클릭</button>',
+methods: {
+btnClick: function () {
+eventBus.$emit('generateEvent', 200)
+}
+}
+})
+
+new Vue({
+el: '#app',
+created() {
+eventBus.$on('generateEvent', function (value) {
+console.log('이벤트발생', value);
+})
+}
+}) -->
