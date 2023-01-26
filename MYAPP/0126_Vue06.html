@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Vue.js를 이용해 보아요-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+  <!-- EventBus를 이용해서 하위 component에서 상위 component로 event를 전달.-->
+  <div id="app">
+    <child-component></child-component>
+  </div>
+
+  <script>
+    // EventBus를 이용하기 위해서 Vue instance를 생성
+    let eventBus = new Vue();
+    // 하위 componenet로 사용할 전역 component를 등룍해보아요!
+    Vue.component('child-component', {
+      template: '<button v-on:click="btnClick">클릭클릭</button>',
+      methods: {
+        btnClick: function () {
+          // eventBus에 대해서 event를 발생시켜요
+          eventBus.$emit('generateEvent', 200)
+        }
+      }
+    })
+
+    // Root component
+    new Vue({
+      el: '#app',
+      created() {
+        eventBus.$on('generateEvent', function (value) {
+          console.log('이벤트발생', value);
+        })
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>

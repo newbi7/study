@@ -24,15 +24,25 @@
         }
       },
       methods: {
-        childFunc: function() {
-          alert('버튼이 클릭되었어요!');
+        childFunc: function () {
+          this.$emit('print_msg', 100, 'Hello', {
+            msg: '전달된 이벤트'
+          })
         }
       }
     })
 
     new Vue({
-      el: '#app'
-    })
+      el: '#app',
+      methods: {
+        printText: function(...args) {
+          console.log('이벤트 발생');
+          console.log(args[0]); // 100
+          console.log(args[1]); // 'Hello'
+          console.log(args[2]); // 'Hello'
+        }
+      }
+    });
   </script>
 
 
