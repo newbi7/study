@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <!-- Vue 라우터를 위한 CDN을 포함시켜야 해요!-->
+  <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Vue 라우터 예제</h1>
+    <p>
+      <!-- 링크를 2개 만들거에요!-->
+      <router-link to="/main">main component로 이동</router-link>
+      <router-link to="/login">login component로 이동</router-link>
+    </p>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    // main component와 login component를 작성할거에요!
+    let mainComponent = {
+      template: '<div>main component</div>'
+    }
+
+    let loginComponent = {
+      template: '<div>login component</div>'
+    }
+
+    // 어떤 경로를 이용하면 어떤 component를 사용할건지 설정해야한다.
+    // 경로가 많아서 배열을 이용해서 설정해야한다.
+    // 아래에는 /가 필수로 있어야한다.
+    let routes = [{
+      path: '/main',
+      component: mainComponent
+    }, {
+      path: '/login',
+      component: loginComponent
+    }]
+
+    // 설정된 경로정보(배열)을 이용해서 Vue라우터 객체를 생성
+    // Vue 라우터는 VueRouter()라는 생성자 함수를 제공해준다.
+    let router = new VueRouter({
+      routes // routes: routes key와 value가 같으면 하나로 겹친다.
+    })
+
+    new Vue({
+      router
+    }).$mount('#app'); // el: '#app'
+  </script>
+
+
+</body>
+
+</html>

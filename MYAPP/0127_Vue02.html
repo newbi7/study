@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <!-- Vue 라우터를 위한 CDN을 포함시켜야 해요!-->
+  <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+
+  <script>
+    // member component를 만들어 보아요
+    let memberComponent = {
+      template: `<div>
+        여기는 member component입니다.
+        <router-view></router-view>
+      </div>`
+    }
+
+    let profileComponent = {
+      template: '<div>여기는 profile component</div>'
+    }
+
+    let postComponent = {
+      template: '<div>여기는 post Component</div>'
+    }
+    // 컴포넌트를 다 만들었으니 경로를 설정해 봅시다.
+    // 어떤 경로가 어떤 컴포넌트와 매칭되는지를 설정한다.
+    let routes = [{
+      path: '/member',
+      component: memberComponent,
+      children: [{
+        path: 'profile',    // /member/profile
+        component:profileComponent
+      },{
+        path: 'post', // /member/post
+        component:postComponent
+      }]
+    }]
+
+    let router = new VueRouter({
+      routes
+    })
+
+    new Vue({
+      router
+    }).$mount('#app'); 
+  </script>
+
+
+</body>
+
+</html>

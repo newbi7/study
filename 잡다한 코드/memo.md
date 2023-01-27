@@ -4,7 +4,7 @@ key = 756e6c8584bda7b0084ecb882f94a26a
 
 targetDt = 20230119
 
-Rest key = 5559977ec58da2ce68a5aba6c2027c04
+kakao Rest key = 5559977ec58da2ce68a5aba6c2027c04
 
 
 http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json

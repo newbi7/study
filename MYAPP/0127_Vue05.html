@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <!-- Vue 라우터를 위한 CDN을 포함시켜야 해요!-->
+  <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+  <!-- Axios를 이용한 CND-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    안녕하세요!! {{ message }}
+  </div>
+
+  <script>
+      new Vue({
+        template: '<div>하이하이 {{ message }}</div>',
+        data: {
+          message: '홍길동'
+        }
+      }).$mount('#app');
+  </script>
+
+
+</body>
+
+</html>
