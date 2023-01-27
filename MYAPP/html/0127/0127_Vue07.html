@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <!-- Vue 라우터를 위한 CDN을 포함시켜야 해요!-->
+  <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+  <!-- Axios를 이용한 CND-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div>{{ message }}</div>
+    <div>{{ message + "!!!" }}</div>
+    <!-- {{}} 가능한 값만 찍는게 좋고 함수를 따로 만들어서 사용하는게 낫다-->
+    <!-- <div>{{ let a = 100; }}</div>   안된다! -->
+    <!-- <div>{{ if(true) {return 100 }}}</div>    안된다!-->
+    <div>{{ true ? 10 : 10 }}</div>
+    <!-- 아래에 있는 표현은 가능은 하지만 좋지 않다.-->
+    <!-- <div>{{ message.split('').reverse().join('') }}</div> -->
+    <div>{{ myFunc() }}</div>
+    <!-- 이런 함수와 약간 다른 성능이 좋은 기능이 있다.-->
+    <div>{{ myComputed }}</div>
+
+  </div>
+
+  <script>
+    new Vue({
+      data: {
+        message: '소리없는 아우성'
+      },
+      methods: {
+        myFunc: function () {
+          console.log('함수호출');
+          return this.message.split('').reverse().join('')
+        }
+      },
+      // myComputed는 변수다. 계산된 값을 캐싱하고 있다.
+      computed: {
+        myFunc: function () {
+          console.log('함수호출');
+          return this.message.split('').reverse().join('')
+        }
+      }
+    }).$mount('#app');
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <!-- Vue 라우터를 위한 CDN을 포함시켜야 해요!-->
+  <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+  <!-- Axios를 이용한 CND-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div v-bind:id="myID">소리없는 아우성!</div>
+    <!-- 만약 v-if의 값이 false면 DOM에서 제거한다.-->
+    <a v-if="flag" href="http://www.naver.com">네이버로 가기</a>
+    <br><br>
+    <!-- 만약 v-show의 값이 false면 화면에서 안보이게 처리.
+      DOM에는 존재해요
+    -->
+    <a v-show="flag" href="http://www.kakao.com">카카오로 가기</a>
+    <br><br>
+    <input v-model="myTxt">
+    <button v-on:click="myFunc">입력상자안에 내용을 알아보아요!</button>
+    <br><br>
+    <ul>
+      <li v-for="name in names">{{ name }}</li>
+    </ul>
+  </div>
+
+  <script>
+    new Vue({
+      data: {
+        flag: true,
+        myID: 'myDIV',
+        myTxt: '',
+        names: ['홍길동', '신사임당', '강감찬']
+      },
+      methods: {
+        myFunc: function() {
+          alert(this.myTxt);
+        }
+      },
+      watch: {
+        myTxt: function() {
+          console.log(this.myTxt + '변경되었어요!');
+        }
+        // myTxt: function(data) {
+        //   console.log(data, '변경되었어요!');
+        // }
+      }
+    }).$mount('#app');
+  </script>
+
+</body>
+
+</html>

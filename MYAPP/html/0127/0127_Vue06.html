@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <!-- Vue 라우터를 위한 CDN을 포함시켜야 해요!-->
+  <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+  <!-- Axios를 이용한 CND-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+    .mystyle {
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div v-bind:id="myID">소리없는 아우성!</div>
+    <div>텍스트 연동은: {{ message }}</div>
+    <div :class="styleValue">스타일 연동이에요!</div>
+    <!-- <div v-bind:class="styleValue"></div> -->
+    <my-component v-bind:my-data="message"></my-component>
+  </div>
+
+  <script>
+    // component를 생성하면서 전역으로 등록
+    Vue.component('my-component', {
+      props: ['myData'],
+      template: '<div>전달된 데이터: {{ myData }}</div>',
+    });
+
+    new Vue({
+      data: {
+        message: '소리없는 아우성!',
+        myID: 'myDiv',
+        styleValue: 'myStyle'
+      }
+    }).$mount('#app');
+  </script>
+
+</body>
+
+</html>
