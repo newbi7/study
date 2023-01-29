@@ -14,52 +14,75 @@
 
 <body>
     <div id="app">
-        <input type="date" style="width:300px;" max="9999-12-31" v-model="myTxt">
+        <input type="date" style="width:300px;" max="9999-12-31" v-model="searchDate">
         <button v-on:click="dateSearch">검색</button>
         <button v-on:click="deleteClick">삭제</button>
-        <globalpage-component></globalpage-component>
+        <globalpage-component-a></globalpage-component-a>
     </div>
 
     <script>
-        Vue.component('globalpage-component', {
+        Vue.component('globalpage-component-a', {
+
             template: `
             <div>
-            <input type = checkbox>
-
-            <box-control
-                v-model="pickedDate"
-                v-on:request="onRequest">
-            </box-control>
-
-            <box-table
-                v-bind:kobis-data="kobisData"
-                v-bind:movie-img-data="movieImgArr"
-                v-bind:selected="selected"
-                v-on:deleteOne="deleteOne">
-                테이블
-            </box-table>
-            </div>`
-            ,
-
+                <search-result-table></search-result-table>
+            </div>`,
             components: {
+                'search-result-table': {
+                    template: `
+                    <div>
+                        <thead>
+                            <tr>
+                                <th scope="col">체크</th>
+                                <th scope="col">순위</th>
+                                <th scope="col">포스터</th>
+                                <th scope="col">영화제목</th>
+                                <th scope="col">관람객수</th>
+                                <th scope="col">개봉일</th>              
+                                <th scope="col">삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                v-for="item in arr"
+                                v-bind:key="(item.rnum - 1)"
+                            >
+                                <td><input type="checkbox" v-model="selected[item.rnum - 1]"></td>
+                                <td>{{ item.rank }}</td>
+                                <td><img v-bind:src="movieImgData[item.rnum - 1]"></td>
+                                <td>{{ item.movieNm }}</td>
+                                <td>{{ item.audiAcc.toLocaleString() }}명</td>
+                                <td>{{ item.openDt }}</td>
+                                <td>
+                                    <v-btn small depressed color="error" v-on:click="deleteClick(item.rnum)">삭제</v-btn>
+                                </td>
+                            </tr>
+                        </tbody>
+                </div>
+                `
+                },
 
-            },
+                methods: {
+
+                }
+
+            }
         });
 
         new Vue({
             data: {
-                myTxt: ''
+                searchDate: '12'
             },
 
             methods: {
                 deleteClick: function () {
-                    $('[type=checkbox]:checked').parent().parent().remove();
+                    this.arr('[type=checkbox]:checked').parent().parent().remove();
                 },
 
                 dateSearch: function () {
 
-                    const datenodash = [myTxt].join('');
-                    const title = [data.dd];
+                    const datenodash = [searchDate].join('');
+                    const title = [data.title];
 
                     axios.get('http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json', {
 
@@ -72,25 +95,25 @@
                     }).then(function () {
                         // console.log(result.data);
                         console.log('코비스 접속성공');
-                        $('tbody').empty();
-                        let arr = data.boxOfficeResult.dailyBoxOfficeList;
-                        $.each(arr, function (idx, item) {
+                        this.$refs('tbody').empty();
+                        this.arr = data.boxOfficeResult.dailyBoxOfficeList;
+                        arr.forEach(arr, function (idx, item) {
                             let title = item.movieNm;
                             let rank = item.rank;
                             let audi = item.audiAcc;
                             let opendt = item.openDt;
 
-                            let tr = $("<tr></tr>");
+                            let tr = this.$refs("<tr></tr>");
 
-                            let checktd = $("<td></td>")
-                            let delCheck = $('<input />')
+                            let checktd = this.$refs("<td></td>")
+                            let delCheck = this.$refs('<input />')
                             delCheck.addClass('form-check-input');
                             delCheck.attr('type', 'checkbox');
                             checktd.append(delCheck);
 
-                            let ranktd = $("<td></td>").text(rank)
-                            let imgtd = $("<td></td>");
-                            let img = $("<img />");
+                            let ranktd = this.$refs("<td></td>").text(rank)
+                            let imgtd = this.$refs("<td></td>");
+                            let img = this.$refs("<img />");
                         }),
                             axios.get('https://dapi.kakao.com/v2/search/image', {
 
@@ -112,6 +135,27 @@
                                 console.log('이상해요');
                             });
 
+                        let titletd = this.$refs("<td></td>").text(title);
+                        let auditd = this.$refs("<td></td>").text(audi);
+                        let opentd = this.$refs("<td></td>").text(opendt);
+                        let deletetd = this.$refs("<td></td>")
+                        let delBtn = this.$refs("<button></button>").text('삭제');
+                        delBtn.addClass('btn btn-danger');
+                        delBtn.click(function () {
+                            this.$refs(this).parent().parent().remove();
+                        });
+                        deletetd.append(delBtn);
+
+                        tr.append(checktd);
+                        tr.append(ranktd);
+                        tr.append(imgtd);
+                        tr.append(titletd);
+                        tr.append(auditd);
+                        tr.append(opentd);
+                        tr.append(deletetd);
+
+                        this.$refs('tbody').append(tr);
+
                     }).catch(function () {
                         console.log('이상해요');
                     });
@@ -124,3 +168,73 @@
 </body>
 
 </html>
+
+
+
+<!-- <script>
+    Vue.component('global-component-a', {
+        template: `
+            <div>
+                <local-component-c></local-component-c>
+                <local-component-d v-bind:input-data="inputData"></local-component-d>
+            </div>`,
+        components: {
+            'local-component-c': {
+                template: '<div>local component c</div>'
+            },
+            'local-component-d': {
+                template: '<div>처리된 데이터: {{ inputData }}</div>',
+                props: {
+                    inputData: String
+                }
+            }
+        },
+        props: {
+            inputData: String
+        }
+    });
+
+    Vue.component('global-component-b', {
+        template: '<local-component-f v-on:event-f="myFunc"></local-component-f>',
+        components: {
+            'local-component-f': {
+                template: `
+                <div>
+                    <input type="text">
+                    <button v-on:click="btnClick">클릭클릭</button>
+                </div>
+                `,
+                methods: {
+                    btnClick: function() {
+                        let val = $('input[type="text"]').val();
+                        console.log('F got an input data from the user: ', val);
+
+                        console.log('F will emeit an event to B: ', val);
+                        this.$emit('event-f', val);
+                    }
+                }
+            }
+        },
+        methods: {
+            myFunc: function(data) {
+                console.log('B got the event from F: ', data);
+                console.log('B will emeit an event to root: ', data);
+                this.$emit('event-b', data);
+            }
+        }
+    });
+
+    new Vue({
+        el: '#app',
+        methods: {
+            handleEvent: function(data) {
+                console.log('Root got the event from B: ', data);
+                this.input = data;
+                console.log('Root set data to: ', data);
+            }
+        },
+        data: {
+            input: ''
+        }
+    });
+</script> -->
