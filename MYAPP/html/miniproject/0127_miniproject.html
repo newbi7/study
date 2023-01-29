@@ -43,18 +43,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                v-for="item in arr"
-                                v-bind:key="(item.rnum - 1)"
-                            >
-                                <td><input type="checkbox" v-model="selected[item.rnum - 1]"></td>
+                            <tr>
+                                <td><input type="checkbox"></td>
                                 <td>{{ item.rank }}</td>
-                                <td><img v-bind:src="movieImgData[item.rnum - 1]"></td>
+                                <td><img v-bind:src="imgtd"></td>
                                 <td>{{ item.movieNm }}</td>
-                                <td>{{ item.audiAcc.toLocaleString() }}명</td>
+                                <td>{{ item.audiAcc }}</td>
                                 <td>{{ item.openDt }}</td>
                                 <td>
-                                    <v-btn small depressed color="error" v-on:click="deleteClick(item.rnum)">삭제</v-btn>
+                                    <v-btn v-on:click="deleteClick(item.rnum)">삭제</v-btn>
                                 </td>
                             </tr>
                         </tbody>
@@ -71,7 +68,8 @@
 
         new Vue({
             data: {
-                searchDate: '12'
+                searchDate: '12',
+                arr: ''
             },
 
             methods: {
@@ -81,8 +79,8 @@
 
                 dateSearch: function () {
 
-                    const datenodash = [searchDate].join('');
-                    const title = [data.title];
+                    const datenodash = [searchDate];
+                    const titleka = [data.title];
 
                     axios.get('http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json', {
 
@@ -93,7 +91,6 @@
 
                         responseType: 'json'
                     }).then(function () {
-                        // console.log(result.data);
                         console.log('코비스 접속성공');
                         this.$refs('tbody').empty();
                         this.arr = data.boxOfficeResult.dailyBoxOfficeList;
@@ -121,7 +118,7 @@
                                     Authorization: 'KakaoAK 5559977ec58da2ce68a5aba6c2027c04',
                                 },
                                 params: {
-                                    query: title
+                                    query: titleka
                                 },
 
                                 responseType: 'json'
@@ -168,73 +165,3 @@
 </body>
 
 </html>
-
-
-
-<!-- <script>
-    Vue.component('global-component-a', {
-        template: `
-            <div>
-                <local-component-c></local-component-c>
-                <local-component-d v-bind:input-data="inputData"></local-component-d>
-            </div>`,
-        components: {
-            'local-component-c': {
-                template: '<div>local component c</div>'
-            },
-            'local-component-d': {
-                template: '<div>처리된 데이터: {{ inputData }}</div>',
-                props: {
-                    inputData: String
-                }
-            }
-        },
-        props: {
-            inputData: String
-        }
-    });
-
-    Vue.component('global-component-b', {
-        template: '<local-component-f v-on:event-f="myFunc"></local-component-f>',
-        components: {
-            'local-component-f': {
-                template: `
-                <div>
-                    <input type="text">
-                    <button v-on:click="btnClick">클릭클릭</button>
-                </div>
-                `,
-                methods: {
-                    btnClick: function() {
-                        let val = $('input[type="text"]').val();
-                        console.log('F got an input data from the user: ', val);
-
-                        console.log('F will emeit an event to B: ', val);
-                        this.$emit('event-f', val);
-                    }
-                }
-            }
-        },
-        methods: {
-            myFunc: function(data) {
-                console.log('B got the event from F: ', data);
-                console.log('B will emeit an event to root: ', data);
-                this.$emit('event-b', data);
-            }
-        }
-    });
-
-    new Vue({
-        el: '#app',
-        methods: {
-            handleEvent: function(data) {
-                console.log('Root got the event from B: ', data);
-                this.input = data;
-                console.log('Root set data to: ', data);
-            }
-        },
-        data: {
-            input: ''
-        }
-    });
-</script> -->
