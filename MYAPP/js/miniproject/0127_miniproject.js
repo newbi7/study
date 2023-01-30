@@ -21,7 +21,7 @@ Vue.component('globalpage-component-a', {
                 <th scope="col">{{item.movieNm}}</th>
                 <th scope="col">{{item.audiAcc}} 명</th>
                 <th scope="col">{{item.openDt}}</th>              
-                <button v-on:click="deleteClick(idx)">삭제</button>
+                <th><button v-on:click="deleteClick(idx)">삭제</button></th>
             </tr>
         </tbody>
         </table>
@@ -30,8 +30,8 @@ Vue.component('globalpage-component-a', {
     components: {
 
     },
-    data(){
-        return{
+    data() {
+        return {
             checkedValues: []
         }
     },
@@ -45,7 +45,7 @@ Vue.component('globalpage-component-a', {
         },
 
         checkBoxNum: function () {
-            this.$emit("check",this.checkedValues)
+            this.$emit("check", this.checkedValues)
         }
     }
 });
@@ -55,24 +55,28 @@ new Vue({
     data: {
         searchDate: '',
         movieArr: [],
+        checked: [],
+        detailtitle: ''
     },
 
     methods: {
-       
+
         onDeleteSelected: function (checked) {
             this.checkedValues = checked;
-            
+
         },
 
         deleteCheckClick: function (checked) {
+            // if (this.checkedValues = false) {
+            //     checknum=1;
+            // }
+            // console.log(checknum);
             console.log(this.checkedValues);
-            console.log(this.movieArr);
-            this.$delete(this.movieArr, this.checkedValue);
+            this.$delete(this.movieArr, this.checkedvalues = true);
 
-            console.log(checked);
             console.log('삭제');
         },
-        
+
         dateSearch: function () {
 
             const datenodash = this.searchDate.replace(/\-/g, "");
