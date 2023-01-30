@@ -1,166 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <title>BoxOffice Template</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
     <!-- Vue 라우터를 위한 CDN-->
     <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
     <!-- Axios를 이용한 CND-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="../../js/miniproject/0127_miniproject.js"></script>
+    <!-- jQuery를 사용하기 위한 CDN을 설정. -->
+
+
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../../CSS/dashboard.css" rel="stylesheet">
+
+
+
 </head>
 
 <body>
+
     <div id="app">
-        <input type="date" style="width:300px;" max="9999-12-31" v-model="searchDate">
-        <button v-on:click="dateSearch">검색</button>
-        <button v-on:click="deleteClick">삭제</button>
-        <globalpage-component-a></globalpage-component-a>
+        <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">BoxOffice</a>
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <input v-model="searchDate" class="form-control form-control-dark w-100 rounded-0 border-0" type="date"
+                max="9999-12-31" placeholder="Search" aria-label="Search">
+            <div class="navbar-nav">
+                <div class="nav-item text-nowrap">
+                    <a class="nav-link px-3" href="#" v-on:click="dateSearch">Search!!</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="container-fluid">
+            <div class="row">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3 sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">
+                                    <span data-feather="home" class="align-text-bottom"></span>
+                                    날짜별 BoxOffice 순위
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                    <h2>영화순위</h2>
+                    <button v-on:click="deleteCheckClick" class="btn btn-primary">선택 삭제</button>
+                    <globalpage-component-a v-bind:movie-arr="movieArr" v-on:check="onDeleteSelected"></globalpage-component-a>
+
+                </main>
+            </div>
+        </div>
     </div>
 
-    <script>
-        Vue.component('globalpage-component-a', {
+</body>
 
-            template: `
-            <div>
-                <search-result-table></search-result-table>
-            </div>`,
-            components: {
-                'search-result-table': {
-                    template: `
-                    <div>
-                        <thead>
-                            <tr>
-                                <th scope="col">체크</th>
-                                <th scope="col">순위</th>
-                                <th scope="col">포스터</th>
-                                <th scope="col">영화제목</th>
-                                <th scope="col">관람객수</th>
-                                <th scope="col">개봉일</th>              
-                                <th scope="col">삭제</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>{{ item.rank }}</td>
-                                <td><img v-bind:src="imgtd"></td>
-                                <td>{{ item.movieNm }}</td>
-                                <td>{{ item.audiAcc }}</td>
-                                <td>{{ item.openDt }}</td>
-                                <td>
-                                    <v-btn v-on:click="deleteClick(item.rnum)">삭제</v-btn>
-                                </td>
-                            </tr>
-                        </tbody>
-                </div>
-                `
-                },
+</html>
 
-                methods: {
 
-                }
-
-            }
-        });
-
-        new Vue({
-            data: {
-                searchDate: '12',
-                arr: ''
-            },
-
-            methods: {
-                deleteClick: function () {
-                    this.arr('[type=checkbox]:checked').parent().parent().remove();
-                },
-
-                dateSearch: function () {
-
-                    const datenodash = [searchDate];
-                    const titleka = [data.title];
-
-                    axios.get('http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json', {
-
-                        params: {
-                            key: '756e6c8584bda7b0084ecb882f94a26a',
-                            targetDt: datenodash,
-                        },
-
-                        responseType: 'json'
-                    }).then(function () {
-                        console.log('코비스 접속성공');
-                        this.$refs('tbody').empty();
-                        this.arr = data.boxOfficeResult.dailyBoxOfficeList;
-                        arr.forEach(arr, function (idx, item) {
-                            let title = item.movieNm;
-                            let rank = item.rank;
-                            let audi = item.audiAcc;
-                            let opendt = item.openDt;
-
-                            let tr = this.$refs("<tr></tr>");
-
-                            let checktd = this.$refs("<td></td>")
-                            let delCheck = this.$refs('<input />')
-                            delCheck.addClass('form-check-input');
-                            delCheck.attr('type', 'checkbox');
-                            checktd.append(delCheck);
-
-                            let ranktd = this.$refs("<td></td>").text(rank)
-                            let imgtd = this.$refs("<td></td>");
-                            let img = this.$refs("<img />");
-                        }),
-                            axios.get('https://dapi.kakao.com/v2/search/image', {
-
-                                headers: {
-                                    Authorization: 'KakaoAK 5559977ec58da2ce68a5aba6c2027c04',
-                                },
-                                params: {
-                                    query: titleka
-                                },
-
-                                responseType: 'json'
-                            }).then(function () {
-                                console.log('카카오접속성공');
-                                let imgurl = data.documents[0].thumbnail_url;
-                                img.attr('src', imgurl);
-                                imgtd.append(img)
-
-                            }).catch(function () {
-                                console.log('이상해요');
-                            });
-
-                        let titletd = this.$refs("<td></td>").text(title);
-                        let auditd = this.$refs("<td></td>").text(audi);
-                        let opentd = this.$refs("<td></td>").text(opendt);
-                        let deletetd = this.$refs("<td></td>")
-                        let delBtn = this.$refs("<button></button>").text('삭제');
-                        delBtn.addClass('btn btn-danger');
-                        delBtn.click(function () {
-                            this.$refs(this).parent().parent().remove();
-                        });
-                        deletetd.append(delBtn);
-
-                        tr.append(checktd);
-                        tr.append(ranktd);
-                        tr.append(imgtd);
-                        tr.append(titletd);
-                        tr.append(auditd);
-                        tr.append(opentd);
-                        tr.append(deletetd);
-
-                        this.$refs('tbody').append(tr);
-
-                    }).catch(function () {
-                        console.log('이상해요');
-                    });
-
-                }
-            }
-        }).$mount('#app');
-    </script>
+<script src="../../js/miniproject/0127_miniproject.js"></script>
 
 </body>
 
