@@ -15,16 +15,42 @@ Vue.component('globalpage-component-a', {
         </thead>
         <tbody>
             <tr v-for="(item, idx) in movieArr">
-                <th><input type="checkbox" v-model="checkedValues[idx]" v-on:click="checkBoxNum"></th>
-                <th scope="col">{{item.rank}}</th>
-                <th scope="col"><img v-bind:src="item.imgurl"></th>
-                <th scope="col">{{item.movieNm}}</th>
-                <th scope="col">{{item.audiAcc}} 명</th>
-                <th scope="col">{{item.openDt}}</th>              
-                <th><button v-on:click="deleteClick(idx)">삭제</button></th>
+                <td><input type="checkbox" v-model="checkedValues[idx]" v-on:click="checkBoxNum"></td>
+                <td>{{item.rank}}</td>
+                <td><img v-bind:src="item.imgurl"></td>
+                <td>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-on:click="detailSearch">
+                    {{item.movieNm}}
+                    </a>
+                </td>
+                <td>{{item.audiAcc}} 명</td>
+                <td>{{item.openDt}}</td>              
+                <td><button v-on:click="deleteClick(idx)">삭제</button></td>
             </tr>
         </tbody>
         </table>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">영화 상세정보, movieNm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                openDt 제작년도
+                nations nation nationNm 제작국가
+                directors director peopleNm 감독
+                actors actor peopleNm 배우
+                showTm 상영시간
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
     </div>
     `,
     components: {
@@ -46,6 +72,28 @@ Vue.component('globalpage-component-a', {
 
         checkBoxNum: function () {
             this.$emit("check", this.checkedValues)
+        },
+
+        detailSearch: function () {
+
+            axios.get('http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json', {
+
+                params: {
+                    key: '756e6c8584bda7b0084ecb882f94a26a',
+                    movieCd: '20112207'
+                },
+
+                responseType: 'json'
+
+            }).then((movieDetail) => {
+                console.log('코비스세부 접속성공');
+                this.movieDetailArr = movieDetail.data.movieInfoResult.movieInfo;
+                console.log(this.movieDetailArr);
+
+            }).catch(function (error) {
+                console.log('코비스세부가 이상해요');
+                console.log(error);
+            });
         }
     }
 });
@@ -56,7 +104,6 @@ new Vue({
         searchDate: '',
         movieArr: [],
         checked: [],
-        detailtitle: ''
     },
 
     methods: {
@@ -122,4 +169,5 @@ new Vue({
 
         }
     }
+
 }).$mount('#app');
