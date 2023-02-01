@@ -4,13 +4,13 @@ Vue.component('globalpage-component-a', {
         <table class="table table-striped table-sm">
         <thead>
             <tr>
-            <th scope="col">Check</th>
-            <th scope="col">순위</th>
-            <th scope="col">포스터</th>
-            <th scope="col">영화제목</th>
-            <th scope="col">관람객수</th>
-            <th scope="col">개봉일</th>              
-            <th scope="col">삭제</th>
+              <th>Check</th>
+              <th>순위</th>
+              <th>포스터</th>
+              <th>영화제목</th>
+              <th>관람객수</th>
+              <th>개봉일</th>              
+              <th>삭제</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@ Vue.component('globalpage-component-a', {
                     {{item.movieNm}}
                     </a>
                 </td>
-                <td>{{item.audiAcc}} 명</td>
+                <td>{{Number(item.audiAcc).toLocaleString()}} 명</td>
                 <td>{{item.openDt}}</td>              
                 <td><button v-on:click="deleteClick(idx)">삭제</button></td>
             </tr>
@@ -39,11 +39,11 @@ Vue.component('globalpage-component-a', {
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                      <tr>제작년도   {{movieDetail.prdtYear}}</tr>
-                      <tr>제작국가   <span v-for="nations in movieDetail.nations">{{nations.nationNm}}</span></tr>
-                      <tr>감독 <span v-for="director in movieDetail.directors">{{director.peopleNm}}</span></tr>
-                      <tr>배우 <span v-for="actor in movieDetail.actors">{{actor.peopleNm}}</span></tr>
-                      <tr>상영시간 {{movieDetail.showTm}}분</tr>
+                      <tr>제작년도 <span>: </span>{{movieDetail.prdtYear}}</tr>
+                      <tr>제작국가 <span>: </span><span v-for="nations in movieDetail.nations"> {{nations.nationNm}}</span></tr>
+                      <tr>감독 <span>: </span><span v-for="director in movieDetail.directors">  {{director.peopleNm}}</span></tr>
+                      <tr>배우 <span>: </span><span v-for="actor in movieDetail.actors">  {{actor.peopleNm}}</span></tr>
+                      <tr>상영시간 <span>: </span>{{movieDetail.showTm}}분</tr>
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -53,31 +53,30 @@ Vue.component('globalpage-component-a', {
         </div>
     </div>
     `,
-    components: {
 
-    },
     data() {
         return {
             movieDetail: {}
         }
     },
+
     props: {
         movieArr: Array,
         movieCd: String,
         checkedValues: Array
     },
+
     model: {
         prop: 'checkedValues',
         event: 'updatedChecked'
     },
+    
     methods: {
         deleteClick: function (idx) {
             this.$delete(this.movieArr, idx);
-
         },
 
         detailSearch: function (movieCd) {
-
             axios.get('http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json', {
 
                 params: {
@@ -118,12 +117,12 @@ new Vue({
 
             this.checkedValues.forEach((el, idx) => {
 
-                if(el) {
+                if (el) {
                     this.movieArr = this.movieArr.filter(movie => Number.parseInt(movie.rnum) - 1 !== idx);
                 }
 
-                });
-                this.checkedValues = [];
+            });
+            this.checkedValues = [];
 
         },
 
