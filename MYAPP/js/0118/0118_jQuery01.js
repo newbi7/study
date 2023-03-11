@@ -56,9 +56,7 @@ function myFunc() {
     console.log($('ol > li:last').text());
     }
 
-
     //////////////////////////////
-
 
     function myFunc() {
         // check가 된 checkbox부터 찾자!
