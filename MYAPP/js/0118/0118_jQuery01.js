@@ -44,7 +44,6 @@ function myFunc() {
 
 ////////////////////////////////////////
 
-
 function myFunc() { 
     console.log($('#apple').text());
     console.log($('#apple + li').text());
