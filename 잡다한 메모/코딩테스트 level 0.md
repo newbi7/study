@@ -231,5 +231,100 @@ class Solution {
 ```
 
 ```java
+정수 배열 numbers가 매개변수로 주어집니다. numbers의 각 원소에 두배한 원소를 가진 배열을 return하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int[] solution(int[] numbers) {
+        int[] result = new int[numbers.length]; // 결과 배열 초기화
+        for (int i = 0; i < numbers.length; i++) {
+            result[i] = numbers[i] * 2; // 각 원소에 두배한 값을 대입
+        }
+        return result; // 결과 배열 반환
+    }
+}
+```
+
+```java
+문자열 my_string과 문자 letter이 매개변수로 주어집니다. my_string에서 letter를 제거한 문자열을 return하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public String solution(String my_string, String letter) {
+        StringBuilder result = new StringBuilder(); // 결과 문자열을 저장할 StringBuilder 객체 생성
+        char ch = letter.charAt(0); // 문자열의 첫 번째 문자를 추출하여 char 타입으로 변환
+        for (int i = 0; i < my_string.length(); i++) {
+            char c = my_string.charAt(i); // 문자열의 i번째 문자 추출
+            if (c != ch) { // 추출한 문자가 주어진 문자와 다르다면
+                result.append(c); // 결과 문자열에 추가
+            }
+        }
+        return result.toString(); // 결과 문자열 반환
+    }
+}
 
 ```
+
+```java
+머쓱이는 할머니께 생신 축하 편지를 쓰려고 합니다. 할머니가 보시기 편하도록 글자 한 자 한 자를 가로 2cm 크기로 적으려고 하며, 편지를 가로로만 적을 때, 축하 문구 message를 적기 위해 필요한 편지지의 최소 가로길이를 return 하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int solution(String message) {
+        return message.length()*2;
+    }
+}
+```
+
+```java
+선분 세 개로 삼각형을 만들기 위해서는 다음과 같은 조건을 만족해야 합니다.
+
+가장 긴 변의 길이는 다른 두 변의 길이의 합보다 작아야 합니다.
+삼각형의 세 변의 길이가 담긴 배열 sides이 매개변수로 주어집니다. 세 변으로 삼각형을 만들 수 있다면 1, 만들 수 없다면 2를 return하도록 solution 함수를 완성해주세요.
+
+import java.util.Arrays;
+
+class Solution {
+    public int solution(int[] sides) {
+        // 세 변의 길이를 오름차순으로 정렬
+        Arrays.sort(sides);
+        
+        // 가장 긴 변의 길이
+        int longest = sides[2];
+        
+        // 나머지 두 변의 길이의 합
+        int sumOfShorterSides = sides[0] + sides[1];
+        
+        // 가장 긴 변의 길이가 나머지 두 변의 길이의 합보다 작으면 삼각형을 만들 수 있음
+        if (longest < sumOfShorterSides) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+}
+```
+```java
+사분면은 한 평면을 x축과 y축을 기준으로 나눈 네 부분입니다. 사분면은 아래와 같이 1부터 4까지 번호를매깁니다.
+스크린샷 2022-07-07 오후 3.27.04 복사본.png
+
+x 좌표와 y 좌표가 모두 양수이면 제1사분면에 속합니다.
+x 좌표가 음수, y 좌표가 양수이면 제2사분면에 속합니다.
+x 좌표와 y 좌표가 모두 음수이면 제3사분면에 속합니다.
+x 좌표가 양수, y 좌표가 음수이면 제4사분면에 속합니다.
+x 좌표 (x, y)를 차례대로 담은 정수 배열 dot이 매개변수로 주어집니다. 좌표 dot이 사분면 중 어디에 속하는지 1, 2, 3, 4 중 하나를 return 하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int solution(int[] dot) {
+        int x = dot[0];
+        int y = dot[1];
+        if (x > 0 && y > 0) {
+            return 1;
+        } else if (x < 0 && y > 0) {
+            return 2;
+        } else if (x < 0 && y < 0) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+}
+```
+
