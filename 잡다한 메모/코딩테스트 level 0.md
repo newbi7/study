@@ -349,3 +349,195 @@ public int[] solution(int[] num_list) {
 }
 
 ```
+
+```java
+머쓱이는 학교에서 키 순으로 줄을 설 때 몇 번째로 서야 하는지 궁금해졌습니다. 머쓱이네 반 친구들의 키가 담긴 정수 배열 array와 머쓱이의 키 height가 매개변수로 주어질 때, 머쓱이보다 키 큰 사람 수를 return 하도록 solution 함수를 완성해보세요.
+
+public int solution(int[] array, int height) {
+    int count = 0;  // 머쓱이보다 큰 키를 가진 사람의 수를 담을 변수 초기화
+    
+    // array를 반복하며 머쓱이보다 큰 키를 가진 사람의 수를 센다.
+    for (int num : array) {
+        if (num > height) {  // 머쓱이보다 큰 키를 가진 경우
+            count++;
+        }
+    }
+    
+    // 머쓱이보다 큰 키를 가진 사람의 수를 리턴한다.
+    return count;
+}
+
+```
+
+```java
+문자열 배열 strlist가 매개변수로 주어집니다. strlist 각 원소의 길이를 담은 배열을 retrun하도록 solution 함수를 완성해주세요.
+
+public int[] solution(String[] strlist) {
+    int[] lengthArr = new int[strlist.length];  // 결과 배열 생성
+    
+    // strlist를 반복하며 각 원소의 길이를 구하여 결과 배열에 저장한다.
+    for (int i = 0; i < strlist.length; i++) {
+        lengthArr[i] = strlist[i].length();
+    }
+    
+    // 각 원소의 길이를 담은 배열을 리턴한다.
+    return lengthArr;
+}
+```
+
+```java
+중앙값은 어떤 주어진 값들을 크기의 순서대로 정렬했을 때 가장 중앙에 위치하는 값을 의미합니다. 예를 들어 1, 2, 7, 10, 11의 중앙값은 7입니다. 정수 배열 array가 매개변수로 주어질 때, 중앙값을 return 하도록 solution 함수를 완성해보세요.
+
+import java.util.Arrays;
+
+public int solution(int[] array) {
+    Arrays.sort(array);  // 배열을 오름차순으로 정렬한다.
+    int midIndex = array.length / 2;  // 중앙 인덱스 계산
+    
+    if (array.length % 2 == 0) {  // 배열의 길이가 짝수인 경우
+        return (array[midIndex - 1] + array[midIndex]) / 2;  // 중앙값 계산하여 리턴
+    } else {  // 배열의 길이가 홀수인 경우
+        return array[midIndex];  // 중앙값 리턴
+    }
+}
+
+```
+
+```java
+두 배열이 얼마나 유사한지 확인해보려고 합니다. 문자열 배열 s1과 s2가 주어질 때 같은 원소의 개수를 return하도록 solution 함수를 완성해주세요.
+
+import java.util.HashSet;
+import java.util.Arrays;
+
+class Solution {
+    public int solution(String[] s1, String[] s2) {
+        HashSet<String> set1 = new HashSet<>(Arrays.asList(s1));
+        HashSet<String> set2 = new HashSet<>(Arrays.asList(s2));
+        set1.retainAll(set2);
+        return set1.size();
+    }
+}
+
+```
+
+```java
+
+정수 n이 매개변수로 주어질 때 n의 각 자리 숫자의 합을 return하도록 solution 함수를 완성해주세요
+
+
+public int solution(int n) {
+    int sum = 0;
+    
+    while (n > 0) {
+        sum += n % 10;  // 일의 자리 숫자를 구하여 sum에 더합니다.
+        n /= 10;  // n을 10으로 나눠 다음 자리 숫자를 구합니다.
+    }
+    
+    return sum;
+}
+
+```
+
+```java
+
+문자열 my_string이 매개변수로 주어집니다. my_string안의 모든 자연수들의 합을 return하도록 solution 함수를 완성해주세요.
+
+    public int solution(String my_string) {
+        int answer = 0;
+        String str = my_string.replaceAll("[^0-9]","");
+
+        for(char ch : str.toCharArray()) {
+            answer += Character.getNumericValue(ch);
+        }
+
+        return answer;
+    }
+```
+
+```java
+문자열 str1, str2가 매개변수로 주어집니다. str1 안에 str2가 있다면 1을 없다면 2를 return하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int solution(String str1, String str2) {
+        if (str1.contains(str2)) { // str1 안에 str2가 포함되어 있는 경우
+            return 1;
+        } else { // str1 안에 str2가 포함되어 있지 않은 경우
+            return 2;
+        }
+    }
+}
+
+```
+
+```java
+개미 군단이 사냥을 나가려고 합니다. 개미군단은 사냥감의 체력에 딱 맞는 병력을 데리고 나가려고 합니다. 장군개미는 5의 공격력을, 병정개미는 3의 공격력을 일개미는 1의 공격력을 가지고 있습니다. 예를 들어 체력 23의 여치를 사냥하려고 할 때, 일개미 23마리를 데리고 가도 되지만, 장군개미 네 마리와 병정개미 한 마리를 데리고 간다면 더 적은 병력으로 사냥할 수 있습니다. 사냥감의 체력 hp가 매개변수로 주어질 때, 사냥감의 체력에 딱 맞게 최소한의 병력을 구성하려면 몇 마리의 개미가 필요한지를 return하도록 solution 함수를 완성해주세요.
+
+
+class Solution {
+    public int solution(int hp) {
+        int answer=hp/5;            //필요한 장군개미의 수를 먼저 구함
+        hp %= 5;                    //장군개미를 전부 상대하고 남은 hp
+
+        answer+=hp/3;               //남은 hp에 필요한 병정개미의 수를 구함
+        hp %= 3;                    //병정개미를 전부 상대하고 남은 hp
+
+        answer+=hp/1;               //남은 hp에 필요한 일개미의 수를 구함
+
+        return answer;
+    }
+}
+```
+
+```java
+어떤 자연수를 제곱했을 때 나오는 정수를 제곱수라고 합니다. 정수 n이 매개변수로 주어질 때, n이 제곱수라면 1을 아니라면 2를 return하도록 solution 함수를 완성해주세요.
+
+
+class Solution {
+    public int solution(int n) {
+        int sqrt = (int) Math.sqrt(n); // n의 제곱근을 계산하여 정수형으로 변환
+        if (sqrt * sqrt == n) { // 정수의 제곱이 n이라면
+            return 1;
+        } else { // 그렇지 않으면
+            return 2;
+        }
+    }
+}
+
+```
+
+```java
+가위는 2 바위는 0 보는 5로 표현합니다. 가위 바위 보를 내는 순서대로 나타낸 문자열 rsp가 매개변수로 주어질 때, rsp에 저장된 가위 바위 보를 모두 이기는 경우를 순서대로 나타낸 문자열을 return하도록 solution 함수를 완성해보세요.
+
+class Solution {
+    public String solution(String rsp) {
+        String answer = "";
+        for (int i = 0; i < rsp.length(); i++) {
+            char c = rsp.charAt(i);
+            if (c == '2') answer += '0'; // 가위(2)는 바위(0)를 이김
+            else if (c == '0') answer += '5'; // 바위(0)는 보(5)를 이김
+            else answer += '2'; // 보(5)는 가위(2)를 이김
+        }
+        return answer;
+    }
+}
+
+```
+
+```java
+군 전략가 머쓱이는 전쟁 중 적군이 다음과 같은 암호 체계를 사용한다는 것을 알아냈습니다.
+
+암호화된 문자열 cipher를 주고받습니다.
+그 문자열에서 code의 배수 번째 글자만 진짜 암호입니다.
+문자열 cipher와 정수 code가 매개변수로 주어질 때 해독된 암호 문자열을 return하도록 solution 함수를 완성해주세요.
+
+
+class Solution {
+    public String solution(String cipher, int code) {
+        String answer = "";
+        for (int i = 0; i < cipher.length(); i++) {
+            if ((i + 1) % code == 0) answer += cipher.charAt(i);
+        }
+        return answer;
+    }
+}
+```
