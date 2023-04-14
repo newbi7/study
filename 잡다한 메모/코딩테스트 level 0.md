@@ -657,3 +657,103 @@ class Solution {
 }
 
 ```
+
+```java
+정수 n과 정수 배열 numlist가 매개변수로 주어질 때, numlist에서 n의 배수가 아닌 수들을 제거한 배열을 return하도록 solution 함수를 완성해주세요.
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public int[] solution(int n, int[] numlist) {
+        List<Integer> resultList = new ArrayList<Integer>();
+        for (int num : numlist) {
+            if (num % n == 0) {
+                resultList.add(num);
+            }
+        }
+        int[] answer = new int[resultList.size()];
+        for (int i = 0; i < resultList.size(); i++) {
+            answer[i] = resultList.get(i);
+        }
+        return answer;
+    }
+}
+
+```
+
+```java
+정수가 담긴 배열 numbers와 문자열 direction가 매개변수로 주어집니다. 배열 numbers의 원소를 direction방향으로 한 칸씩 회전시킨 배열을 return하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int[] solution(int[] numbers, String direction) {
+        int n = numbers.length;
+        int[] answer = new int[n];
+        for (int i = 0; i < n; i++) {
+            int index = (direction.equals("left")) ? (i + n - 1) % n : (i + 1) % n;
+            answer[index] = numbers[i];
+        }
+        return answer;
+    }
+}
+
+```
+
+```java
+우주여행을 하던 머쓱이는 엔진 고장으로 PROGRAMMERS-962 행성에 불시착하게 됐습니다. 입국심사에서 나이를 말해야 하는데, PROGRAMMERS-962 행성에서는 나이를 알파벳으로 말하고 있습니다. a는 0, b는 1, c는 2, ..., j는 9입니다. 예를 들어 23살은 cd, 51살은 fb로 표현합니다. 나이 age가 매개변수로 주어질 때 PROGRAMMER-962식 나이를 return하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public String solution(int age) {
+        StringBuilder sb = new StringBuilder();
+        while (age > 0) {
+            int remainder = age % 10;
+            char digit = (char) (remainder + 'a');
+            sb.append(digit);
+            age /= 10;
+        }
+        return sb.reverse().toString();
+    }
+}
+
+```
+
+```java
+
+정수 배열 array가 매개변수로 주어질 때, 가장 큰 수와 그 수의 인덱스를 담은 배열을 return 하도록 solution 함수를 완성해보세요.
+
+
+class Solution {
+    public int[] solution(int[] array) {
+        int max = Integer.MIN_VALUE;
+        int index = -1;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] > max) {
+                max = array[i];
+                index = i;
+            }
+        }
+        return new int[]{max, index};
+    }
+}
+
+```
+
+```java
+머쓱이네 피자가게는 피자를 여섯 조각으로 잘라 줍니다. 피자를 나눠먹을 사람의 수 n이 매개변수로 주어질 때, n명이 주문한 피자를 남기지 않고 모두 같은 수의 피자 조각을 먹어야 한다면 최소 몇 판을 시켜야 하는지를 return 하도록 solution 함수를 완성해보세요.
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        
+        // 각각의 사람이 먹을 수 있는 조각의 수(1,2,3,4,5,6)를 탐색하며, 모든 사람이 같은 수의 조각을 먹을 수 있는 경우를 찾음
+        for (int i = 1; i <= 6; i++) {
+            if (n % i == 0) { // 모든 사람이 같은 수의 조각을 먹을 수 있는 경우
+                answer = n / i; // 최소한의 판 수 계산
+            }
+        }
+        
+        return answer;
+    }
+}
+
+```
