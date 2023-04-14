@@ -543,5 +543,117 @@ class Solution {
 ```
 
 ```java
+문자열 my_string이 매개변수로 주어질 때, 대문자는 소문자로 소문자는 대문자로 변환한 문자열을 return하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public String solution(String my_string) {
+        String answer = "";
+        for (int i = 0; i < my_string.length(); i++) {
+            char c = my_string.charAt(i);
+            if (Character.isLowerCase(c)) {
+                answer += Character.toUpperCase(c);
+            } else {
+                answer += Character.toLowerCase(c);
+            }
+        }
+        return answer;
+    }
+}
+
+```
+
+```java
+
+문자열 my_string이 매개변수로 주어질 때, my_string 안에 있는 숫자만 골라 오름차순 정렬한 리스트를 return 하도록 solution 함수를 작성해보세요.
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+class Solution {
+    public int[] solution(String my_string) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (int i = 0; i < my_string.length(); i++) {
+            char c = my_string.charAt(i);
+            if (Character.isDigit(c)) {
+                int digit = Character.getNumericValue(c);
+                list.add(digit);
+            }
+        }
+        Collections.sort(list);
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            answer[i] = list.get(i);
+        }
+        return answer;
+    }
+}
+
+```
+
+```java
+머쓱이는 직육면체 모양의 상자를 하나 가지고 있는데 이 상자에 정육면체 모양의 주사위를 최대한 많이 채우고 싶습니다. 상자의 가로, 세로, 높이가 저장되어있는 배열 box와 주사위 모서리의 길이 정수 n이 매개변수로 주어졌을 때, 상자에 들어갈 수 있는 주사위의 최대 개수를 return 하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int solution(int[] box, int n) {
+        int w = box[0] / n;
+        int h = box[1] / n;
+        int l = box[2] / n;
+        int answer = w * h * l;
+        return answer;
+    }
+}
+
+```
+
+```java
+별출력
+
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        for (int i = 1; i <= n; i++) { // 각 줄에 대한 반복문
+            for (int j = 1; j <= i; j++) { // 별 출력을 위한 반복문
+                System.out.print("*");
+            }
+            System.out.println(); // 줄바꿈
+        }
+    }
+}
+
+
+```
+
+```java
+정수 배열 numbers가 매개변수로 주어집니다. numbers의 원소 중 두 개를 곱해 만들 수 있는 최댓값을 return하도록 solution 함수를 완성해주세요.
+
+import java.util.Arrays;
+
+class Solution {
+    public int solution(int[] numbers) {
+        Arrays.sort(numbers); // 배열을 오름차순으로 정렬
+        int len = numbers.length;
+        int max = numbers[len-1] * numbers[len-2]; // 가장 큰 수와 그 이전의 수를 선택하여 곱함
+        int min = numbers[0] * numbers[1]; // 가장 작은 음수와 그 이전의 수를 선택하여 곱함
+        return Math.max(max, min); // 두 값 중에서 큰 값을 선택하여 반환
+    }
+}
+```
+
+```java
+문자열 my_string과 정수 num1, num2가 매개변수로 주어질 때, my_string에서 인덱스 num1과 인덱스 num2에 해당하는 문자를 바꾼 문자열을 return 하도록 solution 함수를 완성해보세요.
+
+class Solution {
+    public String solution(String my_string, int num1, int num2) {
+        char[] charArr = my_string.toCharArray(); // 문자열을 char 배열로 변환
+        char temp = charArr[num1]; // num1에 해당하는 문자를 temp에 저장
+        charArr[num1] = charArr[num2]; // num2에 해당하는 문자를 num1에 대입
+        charArr[num2] = temp; // temp에 저장된 문자를 num2에 대입
+        return String.valueOf(charArr); // char 배열을 다시 문자열로 변환하여 return
+    }
+}
 
 ```
