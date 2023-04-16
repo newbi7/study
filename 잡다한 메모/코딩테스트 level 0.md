@@ -744,15 +744,178 @@ class Solution {
 class Solution {
     public int solution(int n) {
         int answer = 0;
-        
-        // 각각의 사람이 먹을 수 있는 조각의 수(1,2,3,4,5,6)를 탐색하며, 모든 사람이 같은 수의 조각을 먹을 수 있는 경우를 찾음
-        for (int i = 1; i <= 6; i++) {
-            if (n % i == 0) { // 모든 사람이 같은 수의 조각을 먹을 수 있는 경우
-                answer = n / i; // 최소한의 판 수 계산
+        // n이 6의 배수인 경우
+        if (n % 6 == 0) {
+            answer = n / 6;
+        }
+        // n이 6의 배수가 아닌 경우
+        else {
+            for (int a = 1; a <= 100; a++) {
+                int newN = n * a;  // n에 a를 곱한 값을 저장
+                if (newN % 6 == 0) { // a와 n*a가 모두 6의 배수인 경우
+                    answer = newN / 6;  // n*a를 6으로 나눈 값을 answer에 저장
+                    break;  // 첫 번째로 나누어 떨어지는 수를 찾으면 반복문을 빠져나감
+                }
             }
+        }
+        return answer;
+    }
+}
+
+
+```
+
+```java
+
+정수를 담고 있는 배열 arr의 평균값을 return하는 함수, solution을 완성해보세요.
+
+class Solution {
+    public double solution(int[] arr) {
+        double answer = 0;
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+        }
+        answer = (double) sum / arr.length;
+        return answer;
+    }
+}
+
+```
+
+```java
+
+정수 n을 입력받아 n의 약수를 모두 더한 값을 리턴하는 함수, solution을 완성해주세요.
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) { // n이 i로 나누어 떨어지는 경우
+                answer += i; // i를 answer에 더함
+            }
+        }
+        return answer;
+    }
+}
+
+```
+
+```java
+자연수 N이 주어지면, N의 각 자릿수의 합을 구해서 return 하는 solution 함수를 만들어 주세요.
+예를들어 N = 123이면 1 + 2 + 3 = 6을 return 하면 됩니다.
+
+import java.util.*;
+
+public class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        
+        while (n > 0) {  // n이 0보다 클 동안 반복
+            answer += n % 10;  // n의 일의 자리 수를 더해줌
+            n /= 10;  // n의 일의 자리 수를 없앰
+        }
+
+        return answer;
+    }
+}
+
+```
+
+```java
+함수 solution은 정수 x와 자연수 n을 입력 받아, x부터 시작해 x씩 증가하는 숫자를 n개 지니는 리스트를 리턴해야 합니다. 다음 제한 조건을 보고, 조건을 만족하는 함수, solution을 완성해주세요.
+
+class Solution {
+    public long[] solution(int x, int n) {
+        long[] answer = new long[n];
+        long sum = 0;
+        
+        for (int i = 0; i < n; i++) {
+            sum += x;
+            answer[i] = sum;
         }
         
         return answer;
+    }
+}
+
+```
+
+```java
+자연수 n이 매개변수로 주어집니다. n을 x로 나눈 나머지가 1이 되도록 하는 가장 작은 자연수 x를 return 하도록 solution 함수를 완성해주세요. 답이 항상 존재함은 증명될 수 있습니다.
+
+class Solution {
+    public int solution(int n) {
+        for (int x = 1; x < n; x++) {
+            if (n % x == 1) {
+                return x;
+            }
+        }
+        return n - 1;
+    }
+}
+
+```
+
+```java
+
+대문자와 소문자가 섞여있는 문자열 s가 주어집니다. s에 'p'의 개수와 'y'의 개수를 비교해 같으면 True, 다르면 False를 return 하는 solution를 완성하세요. 'p', 'y' 모두 하나도 없는 경우는 항상 True를 리턴합니다. 단, 개수를 비교할 때 대문자와 소문자는 구별하지 않습니다.
+
+예를 들어 s가 "pPoooyY"면 true를 return하고 "Pyy"라면 false를 return합니다.
+
+class Solution {
+    boolean solution(String s) {
+        boolean answer = true;
+        s = s.toLowerCase();
+        int pCount = 0;
+        int yCount = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == 'p') {
+                pCount++;
+            } else if (c == 'y') {
+                yCount++;
+            }
+        }
+        if (pCount != yCount) {
+            answer = false;
+        }
+        return answer;
+    }
+}
+
+```
+
+```java
+자연수 n을 뒤집어 각 자리 숫자를 원소로 가지는 배열 형태로 리턴해주세요. 예를들어 n이 12345이면 [5,4,3,2,1]을 리턴합니다.
+
+class Solution {
+    public int[] solution(long n) {
+        String str = Long.toString(n); // long 타입의 n을 String으로 변환
+        int[] answer = new int[str.length()]; // 배열의 크기는 문자열 길이와 같음
+        
+        for (int i = 0; i < str.length(); i++) {
+            answer[i] = str.charAt(str.length() - i - 1) - '0'; // 각 자리의 숫자를 배열에 저장
+        }
+        
+        return answer;
+    }
+}
+
+```
+
+```java
+임의의 양의 정수 n에 대해, n이 어떤 양의 정수 x의 제곱인지 아닌지 판단하려 합니다.
+n이 양의 정수 x의 제곱이라면 x+1의 제곱을 리턴하고, n이 양의 정수 x의 제곱이 아니라면 -1을 리턴하는 함수를 완성하세요.
+
+class Solution {
+    public long solution(long n) {
+        long sqrt = (long)Math.sqrt(n); // n의 제곱근을 계산
+        if (sqrt * sqrt == n) { // n이 양의 정수 x의 제곱이면
+            return (sqrt + 1) * (sqrt + 1); // x+1의 제곱을 리턴
+        } else { // n이 양의 정수 x의 제곱이 아니면
+            return -1; // -1을 리턴
+        }
     }
 }
 
