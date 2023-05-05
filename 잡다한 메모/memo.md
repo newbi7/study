@@ -46,3 +46,20 @@ public static boolean isPrime(int n) {
     return isPrime[n];
 }
 ```
+```java
+Java의 :: 연산자는 메서드 레퍼런스(Method Reference)를 생성하는 데 사용됩니다. 메서드 레퍼런스는 람다 표현식(lambda expression)과 유사한 기능을 제공하지만, 기존에 정의된 메서드를 참조하므로 코드의 가독성을 높이고 중복 코드를 줄이는 데에 도움을 줍니다.
+
+메서드 레퍼런스는 :: 연산자를 사용하여 생성됩니다. 다음은 :: 연산자를 사용하여 정적 메서드 레퍼런스와 인스턴스 메서드 레퍼런스를 생성하는 예시입니다.
+
+// 정적 메서드 레퍼런스 생성 예시
+Function<String, Integer> parseIntFunction = Integer::parseInt;
+
+// 인스턴스 메서드 레퍼런스 생성 예시
+String str = "Hello World";
+Consumer<String> printConsumer = System.out::println;
+위의 예시에서 Integer::parseInt는 Integer 클래스의 정적 메서드인 parseInt를 참조하며, System.out::println은 System.out 객체의 인스턴스 메서드인 println을 참조합니다.
+
+메서드 레퍼런스는 람다 표현식과 마찬가지로 함수형 인터페이스(functional interface)를 구현하는 데 사용될 수 있습니다. 예를 들어, Function<String, Integer> 인터페이스는 String 타입의 입력값을 받아서 Integer 타입의 결과값을 반환하는 함수형 인터페이스입니다. 따라서 위의 예시에서 parseIntFunction 변수는 String 타입의 입력값을 받아서 Integer 타입의 결과값을 반환하는 함수를 참조하게 됩니다.
+
+Java 8부터 추가된 메서드 레퍼런스 기능은 코드를 더욱 간결하고 가독성 높은 코드로 변환하는 데에 큰 도움을 줍니다.
+```
