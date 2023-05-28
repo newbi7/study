@@ -15,6 +15,8 @@ genres와 plays의 길이는 같으며, 이는 1 이상 10,000 이하입니다.
 장르 종류는 100개 미만입니다.
 장르에 속한 곡이 하나라면, 하나의 곡만 선택합니다.
 모든 장르는 재생된 횟수가 다릅니다.
+# python
+
 입출력 예
 genres	plays	return
 ["classic", "pop", "classic", "classic", "pop"]	[500, 600, 150, 800, 2500]	[4, 1, 3, 0]
@@ -193,10 +195,7 @@ def solution(scoville, K):
 - 1ms 시점에 9ms가 소요되는 B작업 요청
 - 2ms 시점에 6ms가 소요되는 C작업 요청
 와 같은 요청이 들어왔습니다. 이를 그림으로 표현하면 아래와 같습니다.
-Screen Shot 2018-09-13 at 6.34.58 PM.png
-
 한 번에 하나의 요청만을 수행할 수 있기 때문에 각각의 작업을 요청받은 순서대로 처리하면 다음과 같이 처리 됩니다.
-Screen Shot 2018-09-13 at 6.38.52 PM.png
 
 - A: 3ms 시점에 작업 완료 (요청에서 종료까지 : 3ms)
 - B: 1ms부터 대기하다가, 3ms 시점에 작업을 시작해서 12ms 시점에 작업 완료(요청에서 종료까지 : 11ms)
@@ -204,8 +203,6 @@ Screen Shot 2018-09-13 at 6.38.52 PM.png
 이 때 각 작업의 요청부터 종료까지 걸린 시간의 평균은 10ms(= (3 + 11 + 16) / 3)가 됩니다.
 
 하지만 A → C → B 순서대로 처리하면
-Screen Shot 2018-09-13 at 6.41.42 PM.png
-
 - A: 3ms 시점에 작업 완료(요청에서 종료까지 : 3ms)
 - C: 2ms부터 대기하다가, 3ms 시점에 작업을 시작해서 9ms 시점에 작업 완료(요청에서 종료까지 : 7ms)
 - B: 1ms부터 대기하다가, 9ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 17ms)
@@ -568,4 +565,416 @@ def solution(maps):
     # BFS를 마친 후에도 상대 팀 진영에 도착하지 못한 경우 -1 반환
     return -1
 
+```
+
+```python
+# 진법에 맞게 숫자를 표현 -> A 는 10 ~~~ F는 15
+def convert_base(number, base):
+    # 주어진 진법에 맞게 숫자를 표현하는 함수
+    if number == 0:
+        return '0'
+    digits = []
+    while number:
+        if number % base >= 10:
+            digits.append(chr(ord('A') + (number % base) - 10))
+        else:
+            digits.append(str(number % base))
+        number //= base
+    return ''.join(reversed(digits))
+
+def solution(n, t, m, p):
+    answer = ''
+    numbers = ''
+    current_number = 0
+
+    while len(numbers) < t * m:
+        numbers += convert_base(current_number, n)
+        current_number += 1
+
+    for i in range(p-1, t * m, m):
+        answer += numbers[i]
+
+    return answer
+```
+
+```python
+타겟 넘버
+문제 설명
+n개의 음이 아닌 정수들이 있습니다. 이 정수들을 순서를 바꾸지 않고 적절히 더하거나 빼서 타겟 넘버를 만들려고 합니다. 예를 들어 [1, 1, 1, 1, 1]로 숫자 3을 만들려면 다음 다섯 방법을 쓸 수 있습니다.
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+사용할 수 있는 숫자가 담긴 배열 numbers, 타겟 넘버 target이 매개변수로 주어질 때 숫자를 적절히 더하고 빼서 타겟 넘버를 만드는 방법의 수를 return 하도록 solution 함수를 작성해주세요.
+
+제한사항
+주어지는 숫자의 개수는 2개 이상 20개 이하입니다.
+각 숫자는 1 이상 50 이하인 자연수입니다.
+타겟 넘버는 1 이상 1000 이하인 자연수입니다.
+
+
+def solution(numbers, target):
+    count = 0
+    queue = [(0, 0)]  # 현재까지의 합과 인덱스를 저장하는 큐
+    
+    while queue:
+        current_sum, idx = queue.pop(0)
+        
+        if idx == len(numbers):
+            if current_sum == target:
+                count += 1
+        else:
+            queue.append((current_sum + numbers[idx], idx + 1))
+            queue.append((current_sum - numbers[idx], idx + 1))
+    
+    return count
+
+```
+```python
+최소직사각형
+문제 설명
+명함 지갑을 만드는 회사에서 지갑의 크기를 정하려고 합니다. 다양한 모양과 크기의 명함들을 모두 수납할 수 있으면서, 작아서 들고 다니기 편한 지갑을 만들어야 합니다. 이러한 요건을 만족하는 지갑을 만들기 위해 디자인팀은 모든 명함의 가로 길이와 세로 길이를 조사했습니다.
+
+아래 표는 4가지 명함의 가로 길이와 세로 길이를 나타냅니다.
+
+명함 번호	가로 길이	세로 길이
+1	60	50
+2	30	70
+3	60	30
+4	80	40
+가장 긴 가로 길이와 세로 길이가 각각 80, 70이기 때문에 80(가로) x 70(세로) 크기의 지갑을 만들면 모든 명함들을 수납할 수 있습니다. 하지만 2번 명함을 가로로 눕혀 수납한다면 80(가로) x 50(세로) 크기의 지갑으로 모든 명함들을 수납할 수 있습니다. 이때의 지갑 크기는 4000(=80 x 50)입니다.
+
+모든 명함의 가로 길이와 세로 길이를 나타내는 2차원 배열 sizes가 매개변수로 주어집니다. 모든 명함을 수납할 수 있는 가장 작은 지갑을 만들 때, 지갑의 크기를 return 하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int solution(int[][] sizes) {
+        int maxWidth = 0; // 가장 긴 가로 길이
+        int maxHeight = 0; // 가장 긴 세로 길이
+        
+        for (int[] size : sizes) {
+            int width = size[0];
+            int height = size[1];
+            
+            if (width > height) {
+                int temp = width;
+                width = height;
+                height = temp;
+            }
+            
+            if (width > maxWidth) {
+                maxWidth = width;
+            }
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        }
+        
+        return maxWidth * maxHeight;
+    }
+}
+
+```
+
+```python
+소수 찾기
+문제 설명
+한자리 숫자가 적힌 종이 조각이 흩어져있습니다. 흩어진 종이 조각을 붙여 소수를 몇 개 만들 수 있는지 알아내려 합니다.
+
+각 종이 조각에 적힌 숫자가 적힌 문자열 numbers가 주어졌을 때, 종이 조각으로 만들 수 있는 소수가 몇 개인지 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+numbers는 길이 1 이상 7 이하인 문자열입니다.
+numbers는 0~9까지 숫자만으로 이루어져 있습니다.
+"013"은 0, 1, 3 숫자가 적힌 종이 조각이 흩어져있다는 의미입니다.
+
+from itertools import permutations as pe
+
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def solution(numbers):
+    answer = 0
+    nums = set()
+    for i in range(1, len(numbers) + 1):
+        perms = pe(numbers, i)
+        for perm in perms:
+            num = int(''.join(perm))
+            nums.add(num)
+    
+    for num in nums:
+        if is_prime(num):
+            answer += 1
+    
+    return answer
+
+```
+
+```python
+피로도
+문제 설명
+XX게임에는 피로도 시스템(0 이상의 정수로 표현합니다)이 있으며, 일정 피로도를 사용해서 던전을 탐험할 수 있습니다. 이때, 각 던전마다 탐험을 시작하기 위해 필요한 "최소 필요 피로도"와 던전 탐험을 마쳤을 때 소모되는 "소모 피로도"가 있습니다. "최소 필요 피로도"는 해당 던전을 탐험하기 위해 가지고 있어야 하는 최소한의 피로도를 나타내며, "소모 피로도"는 던전을 탐험한 후 소모되는 피로도를 나타냅니다. 예를 들어 "최소 필요 피로도"가 80, "소모 피로도"가 20인 던전을 탐험하기 위해서는 유저의 현재 남은 피로도는 80 이상 이어야 하며, 던전을 탐험한 후에는 피로도 20이 소모됩니다.
+
+이 게임에는 하루에 한 번씩 탐험할 수 있는 던전이 여러개 있는데, 한 유저가 오늘 이 던전들을 최대한 많이 탐험하려 합니다. 유저의 현재 피로도 k와 각 던전별 "최소 필요 피로도", "소모 피로도"가 담긴 2차원 배열 dungeons 가 매개변수로 주어질 때, 유저가 탐험할수 있는 최대 던전 수를 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+k는 1 이상 5,000 이하인 자연수입니다.
+dungeons의 세로(행) 길이(즉, 던전의 개수)는 1 이상 8 이하입니다.
+dungeons의 가로(열) 길이는 2 입니다.
+dungeons의 각 행은 각 던전의 ["최소 필요 피로도", "소모 피로도"] 입니다.
+"최소 필요 피로도"는 항상 "소모 피로도"보다 크거나 같습니다.
+"최소 필요 피로도"와 "소모 피로도"는 1 이상 1,000 이하인 자연수입니다.
+서로 다른 던전의 ["최소 필요 피로도", "소모 피로도"]가 서로 같을 수 있습니다.
+
+from itertools import permutations
+def solution(k, dungeons):
+    clears = []
+    dungeons_permutaions = list(permutations(dungeons, len(dungeons)))
+    
+    for case in dungeons_permutaions:
+        clear = 0
+        stamina = k
+        
+        for dungeon in case:
+            if stamina >= dungeon[0]:
+                stamina -= dungeon[1]
+                clear += 1
+
+        clears.append(clear)
+    return max(clears)
+```
+
+```python
+전력망을 둘로 나누기
+문제 설명
+n개의 송전탑이 전선을 통해 하나의 트리 형태로 연결되어 있습니다. 당신은 이 전선들 중 하나를 끊어서 현재의 전력망 네트워크를 2개로 분할하려고 합니다. 이때, 두 전력망이 갖게 되는 송전탑의 개수를 최대한 비슷하게 맞추고자 합니다.
+
+송전탑의 개수 n, 그리고 전선 정보 wires가 매개변수로 주어집니다. 전선들 중 하나를 끊어서 송전탑 개수가 가능한 비슷하도록 두 전력망으로 나누었을 때, 두 전력망이 가지고 있는 송전탑 개수의 차이(절대값)를 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+n은 2 이상 100 이하인 자연수입니다.
+wires는 길이가 n-1인 정수형 2차원 배열입니다.
+wires의 각 원소는 [v1, v2] 2개의 자연수로 이루어져 있으며, 이는 전력망의 v1번 송전탑과 v2번 송전탑이 전선으로 연결되어 있다는 것을 의미합니다.
+1 ≤ v1 < v2 ≤ n 입니다.
+전력망 네트워크가 하나의 트리 형태가 아닌 경우는 입력으로 주어지지 않습니다.
+
+def solution(n, wires):
+    graph = [[] for _ in range(n + 1)]
+    for wire in wires:
+        v1, v2 = wire
+        graph[v1].append(v2)
+        graph[v2].append(v1)
+    
+    min_diff = float('inf') 
+    
+    def dfs(v, parent):
+        nonlocal min_diff
+        
+        count = 1
+        for neighbor in graph[v]:
+            if neighbor != parent:
+                count += dfs(neighbor, v)
+        
+        diff = abs(n - 2 * count)
+        min_diff = min(min_diff, diff)
+        
+        return count
+    
+    dfs(1, 0) 
+    
+    return min_diff
+
+```
+```python
+모음 사전
+문제 설명
+사전에 알파벳 모음 'A', 'E', 'I', 'O', 'U'만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 "A"이고, 그다음은 "AA"이며, 마지막 단어는 "UUUUU"입니다.
+
+단어 하나 word가 매개변수로 주어질 때, 이 단어가 사전에서 몇 번째 단어인지 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+word의 길이는 1 이상 5 이하입니다.
+word는 알파벳 대문자 'A', 'E', 'I', 'O', 'U'로만 이루어져 있습니다.
+
+def solution(word):
+    vowels = ['A', 'E', 'I', 'O', 'U']  
+    word_dict = {}  
+    count = 0  
+    
+    def generate_words(curr_word):
+        nonlocal count
+        
+        word_dict[curr_word] = count
+        count += 1
+        
+        if len(curr_word) < 5:
+            for vowel in vowels:
+                generate_words(curr_word + vowel)
+    
+    generate_words('')  
+    return word_dict[word] 
+
+```
+```python
+H-Index
+문제 설명
+H-Index는 과학자의 생산성과 영향력을 나타내는 지표입니다. 어느 과학자의 H-Index를 나타내는 값인 h를 구하려고 합니다. 위키백과1에 따르면, H-Index는 다음과 같이 구합니다.
+
+어떤 과학자가 발표한 논문 n편 중, h번 이상 인용된 논문이 h편 이상이고 나머지 논문이 h번 이하 인용되었다면 h의 최댓값이 이 과학자의 H-Index입니다.
+
+어떤 과학자가 발표한 논문의 인용 횟수를 담은 배열 citations가 매개변수로 주어질 때, 이 과학자의 H-Index를 return 하도록 solution 함수를 작성해주세요.
+
+제한사항
+과학자가 발표한 논문의 수는 1편 이상 1,000편 이하입니다.
+논문별 인용 횟수는 0회 이상 10,000회 이하입니다.
+
+
+def solution(citations):
+    citations.sort(reverse=True) 
+    
+    print(citations)
+    for i in range(len(citations)):
+        if citations[i] < i + 1:
+            return i  
+    
+    return len(citations) 
+```
+
+```python
+문제 설명
+프로그래머스 팀에서는 기능 개선 작업을 수행 중입니다. 각 기능은 진도가 100%일 때 서비스에 반영할 수 있습니다.
+
+또, 각 기능의 개발속도는 모두 다르기 때문에 뒤에 있는 기능이 앞에 있는 기능보다 먼저 개발될 수 있고, 이때 뒤에 있는 기능은 앞에 있는 기능이 배포될 때 함께 배포됩니다.
+
+먼저 배포되어야 하는 순서대로 작업의 진도가 적힌 정수 배열 progresses와 각 작업의 개발 속도가 적힌 정수 배열 speeds가 주어질 때 각 배포마다 몇 개의 기능이 배포되는지를 return 하도록 solution 함수를 완성하세요.
+
+제한 사항
+작업의 개수(progresses, speeds배열의 길이)는 100개 이하입니다.
+작업 진도는 100 미만의 자연수입니다.
+작업 속도는 100 이하의 자연수입니다.
+배포는 하루에 한 번만 할 수 있으며, 하루의 끝에 이루어진다고 가정합니다. 예를 들어 진도율이 95%인 작업의 개발 속도가 하루에 4%라면 배포는 2일 뒤에 이루어집니다.
+입출력 예
+progresses	speeds	return
+[93, 30, 55]	[1, 30, 5]	[2, 1]
+[95, 90, 99, 99, 80, 99]	[1, 1, 1, 1, 1, 1]	[1, 3, 2]
+
+def solution(progresses, speeds):
+    answer = []
+    plist = [x+y for x,y in zip(progresses, speeds)]
+    count = 0
+    for i in range(len(plist)):
+        if len(plist) == 0:
+            break
+        while plist[0] < 100:
+            plist = [x + y for x, y in zip(plist, speeds)]
+        while len(plist) > 0 and plist[0] >= 100:
+            plist.pop(0)
+            speeds.pop(0)
+            count += 1
+        
+        answer.append(count)
+        count = 0
+    return answer
+
+```
+```python
+문제 설명
+운영체제의 역할 중 하나는 컴퓨터 시스템의 자원을 효율적으로 관리하는 것입니다. 이 문제에서는 운영체제가 다음 규칙에 따라 프로세스를 관리할 경우 특정 프로세스가 몇 번째로 실행되는지 알아내면 됩니다.
+
+1. 실행 대기 큐(Queue)에서 대기중인 프로세스 하나를 꺼냅니다.
+2. 큐에 대기중인 프로세스 중 우선순위가 더 높은 프로세스가 있다면 방금 꺼낸 프로세스를 다시 큐에 넣습니다.
+3. 만약 그런 프로세스가 없다면 방금 꺼낸 프로세스를 실행합니다.
+  3.1 한 번 실행한 프로세스는 다시 큐에 넣지 않고 그대로 종료됩니다.
+예를 들어 프로세스 4개 [A, B, C, D]가 순서대로 실행 대기 큐에 들어있고, 우선순위가 [2, 1, 3, 2]라면 [C, D, A, B] 순으로 실행하게 됩니다.
+
+현재 실행 대기 큐(Queue)에 있는 프로세스의 중요도가 순서대로 담긴 배열 priorities와, 몇 번째로 실행되는지 알고싶은 프로세스의 위치를 알려주는 location이 매개변수로 주어질 때, 해당 프로세스가 몇 번째로 실행되는지 return 하도록 solution 함수를 작성해주세요.
+
+def solution(priorities, location):
+    queue =  [(i,p) for i,p in enumerate(priorities)]
+    answer = 0
+    while True:
+        cur = queue.pop(0)
+        if any(cur[1] < q[1] for q in queue):
+            queue.append(cur)
+        else:
+            answer += 1
+            if cur[0] == location:
+                return answer
+```
+
+```python
+문제 설명
+점심시간에 도둑이 들어, 일부 학생이 체육복을 도난당했습니다. 다행히 여벌 체육복이 있는 학생이 이들에게 체육복을 빌려주려 합니다. 학생들의 번호는 체격 순으로 매겨져 있어, 바로 앞번호의 학생이나 바로 뒷번호의 학생에게만 체육복을 빌려줄 수 있습니다. 예를 들어, 4번 학생은 3번 학생이나 5번 학생에게만 체육복을 빌려줄 수 있습니다. 체육복이 없으면 수업을 들을 수 없기 때문에 체육복을 적절히 빌려 최대한 많은 학생이 체육수업을 들어야 합니다.
+
+전체 학생의 수 n, 체육복을 도난당한 학생들의 번호가 담긴 배열 lost, 여벌의 체육복을 가져온 학생들의 번호가 담긴 배열 reserve가 매개변수로 주어질 때, 체육수업을 들을 수 있는 학생의 최댓값을 return 하도록 solution 함수를 작성해주세요.
+
+제한사항
+전체 학생의 수는 2명 이상 30명 이하입니다.
+체육복을 도난당한 학생의 수는 1명 이상 n명 이하이고 중복되는 번호는 없습니다.
+여벌의 체육복을 가져온 학생의 수는 1명 이상 n명 이하이고 중복되는 번호는 없습니다.
+여벌 체육복이 있는 학생만 다른 학생에게 체육복을 빌려줄 수 있습니다.
+여벌 체육복을 가져온 학생이 체육복을 도난당했을 수 있습니다. 이때 이 학생은 체육복을 하나만 도난당했다고 가정하며, 남은 체육복이 하나이기에 다른 학생에게는 체육복을 빌려줄 수 없습니다.
+
+def solution(n, lost, reserve):
+    clothes = [1] * n  
+    
+    for i in lost:
+        clothes[i-1] -= 1  
+    
+    for i in reserve:
+        clothes[i-1] += 1  
+    
+    for i in range(n):
+        if clothes[i] == 0:  
+            if i > 0 and clothes[i-1] == 2: 
+                clothes[i] += 1
+                clothes[i-1] -= 1
+            elif i < n-1 and clothes[i+1] == 2:  
+                clothes[i] += 1
+                clothes[i+1] -= 1
+    count = 0 
+    for c in clothes:
+        if c > 0:
+            count += 1
+    
+    return count
+```
+
+```python
+구명보트
+문제 설명
+무인도에 갇힌 사람들을 구명보트를 이용하여 구출하려고 합니다. 구명보트는 작아서 한 번에 최대 2명씩 밖에 탈 수 없고, 무게 제한도 있습니다.
+
+예를 들어, 사람들의 몸무게가 [70kg, 50kg, 80kg, 50kg]이고 구명보트의 무게 제한이 100kg이라면 2번째 사람과 4번째 사람은 같이 탈 수 있지만 1번째 사람과 3번째 사람의 무게의 합은 150kg이므로 구명보트의 무게 제한을 초과하여 같이 탈 수 없습니다.
+
+구명보트를 최대한 적게 사용하여 모든 사람을 구출하려고 합니다.
+
+사람들의 몸무게를 담은 배열 people과 구명보트의 무게 제한 limit가 매개변수로 주어질 때, 모든 사람을 구출하기 위해 필요한 구명보트 개수의 최솟값을 return 하도록 solution 함수를 작성해주세요.
+
+제한사항
+무인도에 갇힌 사람은 1명 이상 50,000명 이하입니다.
+각 사람의 몸무게는 40kg 이상 240kg 이하입니다.
+구명보트의 무게 제한은 40kg 이상 240kg 이하입니다.
+구명보트의 무게 제한은 항상 사람들의 몸무게 중 최댓값보다 크게 주어지므로 사람들을 구출할 수 없는 경우는 없습니다.
+
+def solution(people, limit):
+    people.sort()  
+    left = 0  
+    right = len(people) - 1  
+    count = 0  
+
+    while left <= right:
+        if people[left] + people[right] <= limit:
+            left += 1  
+        right -= 1  
+        count += 1  
+
+    return count
 ```
