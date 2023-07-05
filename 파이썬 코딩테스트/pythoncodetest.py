@@ -17,3 +17,4 @@ def solution(n):
 
     answer = not_dragons[n] + can_dragons[n] + dragon_eggs[n]
     return answer
+
