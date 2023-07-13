@@ -8,14 +8,9 @@ Ubuntu 18.04 게스트에 VirtualBox Guest Additions를 설치하는 방법에 �
 
  
 
- 
-
 
 Linux : Ubuntu 18.04 : VirtualBox Guest Additions 설치 방법, 예제, 명령어
- 
-
- 
-
+```
 Ubuntu 게스트에 게스트 추가 프로그램을 설치
 VirtualBox는 지원되는 모든 게스트 운영 체제에 대해 Guest Additions 설치 관리자를 포함하는 "VBoxGuestAdditions.iso" 이미지 ISO 파일과 함께 제공됩니다. 이 파일은 호스트 시스템에 있으며 VirtualBox GUI 관리자를 사용하여 게스트 시스템에 마운트할 수 있습니다. 마운트되면 게스트 추가 설치 관리자를 사용하여 게스트 시스템에 게스트 추가 사항을 설치할 수 있습니다.
 
@@ -90,3 +85,4 @@ lsmod | grep vboxguest
 
 Ubuntu 18.04 가상 시스템에 VirtualBox Guest Additions를 설치하는 것은 쉬운 작업입니다. Guest Additions는 게스트 운영 체제를 최적화하여 성능을 개선하고 사용 편의성을 향상시킵니다.
 
+``````
