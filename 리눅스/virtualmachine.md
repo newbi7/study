@@ -1,4 +1,4 @@
-https://jjeongil.tistory.com/1645
+<!-- https://jjeongil.tistory.com/1645 -->
 
 VirtualBox는 여러 게스트 운영 체제(가상 시스템)를 동시에 실행할 수 있는 오픈 소스 교차 플랫폼 가상화 소프트웨어입니다. 
 
