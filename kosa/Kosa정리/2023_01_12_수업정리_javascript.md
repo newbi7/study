@@ -262,7 +262,6 @@ ex2)
 // let result = 50;
 
 // block level scope
-
 // let score = 50;
 // {let score = 100;
 //  let myVar = 10;
