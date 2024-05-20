@@ -6,5 +6,3 @@
 - https://dev-coco.tistory.com/163 백엔드
 - https://dev-coco.tistory.com/164 프로그래밍 공통/ 기타
 - https://dev-coco.tistory.com/160 알고리즘
-
-test
